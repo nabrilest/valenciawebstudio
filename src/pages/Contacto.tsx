@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import Layout from "@/components/Layout";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, "El nombre es obligatorio").max(100, "Máximo 100 caracteres"),
@@ -42,11 +43,28 @@ const Contacto = () => {
   const privacyValue = watch("privacy");
 
   const onSubmit = async (data: ContactFormData) => {
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log("Form submitted:", { name: data.name, email: data.email });
-    setIsSubmitted(true);
-    toast.success("Mensaje enviado correctamente");
+    try {
+      const { error } = await supabase.functions.invoke("send-contact-email", {
+        body: {
+          name: data.name,
+          email: data.email,
+          message: data.message,
+        },
+      });
+
+      if (error) {
+        console.error("Error sending email:", error);
+        toast.error("Error al enviar el mensaje. Inténtalo de nuevo.");
+        return;
+      }
+
+      console.log("Form submitted successfully:", { name: data.name, email: data.email });
+      setIsSubmitted(true);
+      toast.success("Mensaje enviado correctamente");
+    } catch (error) {
+      console.error("Error sending email:", error);
+      toast.error("Error al enviar el mensaje. Inténtalo de nuevo.");
+    }
   };
 
   return (
@@ -78,7 +96,7 @@ const Contacto = () => {
                 ¿Prefieres escribirnos directamente?
               </h2>
               <p className="font-body text-muted-foreground mb-4">
-                También puedes contactarnos por WhatsApp o Instagram. Respondemos rápido 🚀
+                También puedes contactarnos por WhatsApp o Instagram. Respondemos rápido.
               </p>
               <div className="flex flex-wrap gap-3">
                 <Button asChild size="lg" className="bg-[#25D366] text-white hover:bg-[#25D366]/90 font-body font-semibold">

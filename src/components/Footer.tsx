@@ -80,7 +80,7 @@ const Footer = () => {
 
         <div className="mt-8 pt-6 border-t border-primary-foreground/20">
           <p className="font-body text-sm text-primary-foreground/60 text-center">
-            © {currentYear} Valencia Web Studio. Hecho con 🍊 en Valencia.
+            © {currentYear} Valencia Web Studio. Hecho con cariño en Valencia.
           </p>
         </div>
       </div>

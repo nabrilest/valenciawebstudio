@@ -30,7 +30,7 @@ const Home = () => {
         <div className="container relative py-16 md:py-24 lg:py-32">
           <div className="max-w-3xl animate-slide-up">
             <p className="font-body text-secondary font-semibold text-lg mb-3">
-              Hola, somos Valencia Web Studio 👋
+              Hola, somos Valencia Web Studio
             </p>
             <h1 className="font-display text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-primary-foreground leading-tight mb-5">
               Webs que funcionan para negocios como el tuyo

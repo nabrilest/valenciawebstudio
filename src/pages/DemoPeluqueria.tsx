@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowLeft, Phone, Clock, MapPin, Scissors, Heart, Instagram, Facebook, Check, MessageCircle } from "lucide-react";
+import { ArrowLeft, Phone, Clock, MapPin, Scissors, Heart, Instagram, MessageCircle, Star, Users, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.png";
 import heroImage from "@/assets/lumina-hero.jpg";
@@ -14,46 +14,61 @@ import gallery8 from "@/assets/gallery-8.jpg";
 
 const DemoPeluqueria = () => {
   const services = [
-    { name: "Corte mujer y hombre", icon: Scissors },
-    { name: "Color, mechas y balayage", icon: Scissors },
-    { name: "Peinados para eventos", icon: Scissors },
-    { name: "Tratamientos capilares", icon: Scissors },
-    { name: "Asesoramiento de imagen", icon: Scissors },
+    { name: "Corte mujer", price: "desde 18€", description: "Corte personalizado con lavado y secado" },
+    { name: "Corte hombre", price: "desde 12€", description: "Corte clásico o moderno con acabado" },
+    { name: "Corte infantil", price: "desde 10€", description: "Para los peques del barrio (hasta 12 años)" },
+    { name: "Tinte raíz", price: "desde 25€", description: "Cobertura de raíz con productos de calidad" },
+    { name: "Mechas", price: "desde 45€", description: "Mechas clásicas o babylights" },
+    { name: "Balayage", price: "desde 60€", description: "Técnica de color natural y degradado" },
+    { name: "Peinado evento", price: "consultar", description: "Bodas, comuniones, fiestas..." },
+    { name: "Keratina", price: "desde 80€", description: "Tratamiento alisador y nutritivo" },
+    { name: "Manicura", price: "desde 15€", description: "Manicura clásica o semipermanente" },
+    { name: "Depilación cera", price: "desde 8€", description: "Cejas, labio, piernas..." },
   ];
 
   const gallery = [
-    { src: gallery1, alt: "Balayage caramelo" },
-    { src: gallery2, alt: "Corte bob moderno" },
-    { src: gallery3, alt: "Color cobre vibrante" },
-    { src: gallery4, alt: "Corte masculino fade" },
-    { src: gallery5, alt: "Peinado para evento" },
-    { src: gallery6, alt: "Mechas rubias naturales" },
-    { src: gallery7, alt: "Tratamiento capilar" },
-    { src: gallery8, alt: "Interior del salón" },
+    { src: gallery1, alt: "Mechas naturales" },
+    { src: gallery2, alt: "Corte bob" },
+    { src: gallery3, alt: "Color cobrizo" },
+    { src: gallery4, alt: "Corte caballero" },
+    { src: gallery5, alt: "Peinado fiesta" },
+    { src: gallery6, alt: "Rubio nórdico" },
+    { src: gallery7, alt: "Tratamiento brillo" },
+    { src: gallery8, alt: "Nuestro salón" },
   ];
 
-  const prices = [
-    { name: "Corte mujer", price: "25 €" },
-    { name: "Corte hombre", price: "18 €" },
-    { name: "Color y mechas", price: "desde 40 €" },
-    { name: "Peinados para eventos", price: "desde 35 €" },
-    { name: "Tratamientos capilares", price: "consultar" },
+  const testimonials = [
+    {
+      name: "Ana García",
+      text: "Llevo 5 años viniendo y Marta siempre sabe lo que quiero. Es como tener una amiga que te entiende.",
+      location: "Vecina de Benimaclet"
+    },
+    {
+      name: "Carlos Ruiz",
+      text: "Por fin encontré una peluquería donde me escuchan. Nada de esperas, cita y listo.",
+      location: "Cliente desde 2020"
+    },
+    {
+      name: "Lucía Fernández",
+      text: "El ambiente es como estar en casa de una amiga. Y el color que me hacen es espectacular.",
+      location: "Vecina del barrio"
+    },
   ];
 
   const benefits = [
-    "Atención personalizada con cita previa",
-    "Reserva rápida por WhatsApp",
-    "Profesionales con experiencia",
-    "Ambiente moderno y cuidado",
-    "Ubicación céntrica en Valencia",
+    { icon: Clock, text: "Primera visita: asesoramiento gratis" },
+    { icon: Heart, text: "Te dedicamos el tiempo que necesitas" },
+    { icon: Sparkles, text: "Productos profesionales de calidad" },
+    { icon: Users, text: "Siempre con cita, sin esperas" },
+    { icon: Star, text: "Descuento 10% para mayores de 65" },
   ];
 
-  const whatsappLink = "https://wa.me/34679910422";
+  const whatsappLink = "https://wa.me/34679910422?text=Hola!%20Quiero%20pedir%20cita%20en%20la%20peluquer%C3%ADa";
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen" style={{ backgroundColor: "#F7F3E9" }}>
       {/* Demo Banner */}
-      <div className="bg-gradient-to-r from-rose-600 to-rose-500 text-white py-3">
+      <div style={{ background: "linear-gradient(135deg, #5D4E42 0%, #8B9D83 100%)" }} className="text-white py-3">
         <div className="container flex items-center justify-between flex-wrap gap-2">
           <div className="flex items-center gap-3">
             <img src={logo} alt="Valencia Web Studio" className="h-8 w-auto" />
@@ -69,107 +84,162 @@ const DemoPeluqueria = () => {
       </div>
 
       {/* Header */}
-      <header className="bg-white/95 backdrop-blur-sm border-b border-rose-100 sticky top-0 z-40">
+      <header className="bg-white/95 backdrop-blur-sm border-b sticky top-0 z-40" style={{ borderColor: "#D4A5A5" }}>
         <div className="container flex items-center justify-between h-16">
-          <span className="font-display text-2xl font-bold tracking-wide text-gray-900">LÚMINA STUDIO</span>
+          <div className="flex items-center gap-2">
+            <Scissors className="w-6 h-6" style={{ color: "#8B9D83" }} />
+            <span className="font-display text-xl font-bold" style={{ color: "#5D4E42" }}>Marta y Laura</span>
+          </div>
           <nav className="hidden md:flex items-center gap-8">
-            <a href="#inicio" className="font-body text-sm text-gray-600 hover:text-rose-600 transition-colors">Inicio</a>
-            <a href="#servicios" className="font-body text-sm text-gray-600 hover:text-rose-600 transition-colors">Servicios</a>
-            <a href="#galeria" className="font-body text-sm text-gray-600 hover:text-rose-600 transition-colors">Galería</a>
-            <a href="#tarifas" className="font-body text-sm text-gray-600 hover:text-rose-600 transition-colors">Tarifas</a>
-            <a href="#contacto" className="font-body text-sm text-gray-600 hover:text-rose-600 transition-colors">Contacto</a>
+            <a href="#inicio" className="font-body text-sm hover:opacity-70 transition-opacity" style={{ color: "#5D4E42" }}>Inicio</a>
+            <a href="#nosotras" className="font-body text-sm hover:opacity-70 transition-opacity" style={{ color: "#5D4E42" }}>Nosotras</a>
+            <a href="#servicios" className="font-body text-sm hover:opacity-70 transition-opacity" style={{ color: "#5D4E42" }}>Servicios</a>
+            <a href="#galeria" className="font-body text-sm hover:opacity-70 transition-opacity" style={{ color: "#5D4E42" }}>Galería</a>
+            <a href="#opiniones" className="font-body text-sm hover:opacity-70 transition-opacity" style={{ color: "#5D4E42" }}>Opiniones</a>
+            <a href="#contacto" className="font-body text-sm hover:opacity-70 transition-opacity" style={{ color: "#5D4E42" }}>Contacto</a>
           </nav>
           <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-            <Button className="bg-rose-600 hover:bg-rose-700 text-white font-body text-sm gap-2">
+            <Button className="font-body text-sm gap-2 text-white" style={{ backgroundColor: "#8B9D83" }}>
               <MessageCircle className="w-4 h-4" />
-              Reservar
+              Pedir cita
             </Button>
           </a>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section id="inicio" className="relative h-[80vh] min-h-[500px] flex items-center justify-center">
+      <section id="inicio" className="relative h-[85vh] min-h-[550px] flex items-center justify-center">
         <div className="absolute inset-0">
           <img 
             src={heroImage} 
-            alt="Interior de Lúmina Studio" 
+            alt="Interior de la peluquería" 
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60" />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(93, 78, 66, 0.5), rgba(93, 78, 66, 0.7))" }} />
         </div>
         <div className="relative z-10 text-center text-white px-4 max-w-3xl mx-auto">
-          <p className="font-body text-sm uppercase tracking-widest mb-4 text-rose-200">Peluquería moderna en Valencia</p>
-          <h1 className="font-display text-5xl md:text-7xl font-bold mb-6 tracking-tight">LÚMINA STUDIO</h1>
-          <p className="font-body text-lg md:text-xl mb-8 text-white/90 max-w-xl mx-auto">
-            Especialistas en color, corte y estilo. Reserva tu cita de forma rápida y sin esperas.
+          <p className="font-body text-sm uppercase tracking-widest mb-4" style={{ color: "#D4A5A5" }}>Tu peluquería de barrio en Benimaclet</p>
+          <h1 className="font-display text-4xl md:text-6xl font-bold mb-4 tracking-tight">Peluquería Marta y Laura</h1>
+          <p className="font-body text-lg md:text-xl mb-2 text-white/90 max-w-xl mx-auto">
+            Donde te conocemos por tu nombre
           </p>
-          <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-            <Button size="lg" className="bg-rose-600 hover:bg-rose-700 text-white font-body text-lg px-8 py-6 gap-3">
-              <MessageCircle className="w-5 h-5" />
-              Reservar por WhatsApp
-            </Button>
-          </a>
-        </div>
-      </section>
-
-      {/* Sobre Nosotros */}
-      <section className="py-20 md:py-28 bg-rose-50/50">
-        <div className="container">
-          <p className="font-body text-sm uppercase tracking-widest text-rose-600 text-center mb-3">Conócenos</p>
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-gray-900 text-center mb-8">
-            Sobre Lúmina Studio
-          </h2>
-          <div className="max-w-2xl mx-auto text-center space-y-4">
-            <p className="font-body text-gray-600 text-lg leading-relaxed">
-              En Lúmina Studio cuidamos cada detalle para que tu experiencia sea cómoda, cercana y profesional.
-            </p>
-            <p className="font-body text-gray-600 leading-relaxed">
-              Trabajamos con cita previa para ofrecer una atención personalizada y resultados que se adaptan a tu estilo.
-            </p>
-            <p className="font-body text-gray-600 leading-relaxed">
-              Nuestro equipo está especializado en color, corte y tratamientos capilares actuales.
-            </p>
+          <p className="font-body text-base mb-8 text-white/70 max-w-md mx-auto">
+            En el corazón de Benimaclet desde 2015. Aquí no eres un número, eres parte del barrio.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+              <Button size="lg" className="font-body text-lg px-8 py-6 gap-3 text-white" style={{ backgroundColor: "#8B9D83" }}>
+                <MessageCircle className="w-5 h-5" />
+                Pedir cita por WhatsApp
+              </Button>
+            </a>
+            <a href="tel:+34679910422">
+              <Button size="lg" variant="outline" className="font-body text-lg px-8 py-6 gap-3 bg-white/10 border-white/30 text-white hover:bg-white/20">
+                <Phone className="w-5 h-5" />
+                679 910 422
+              </Button>
+            </a>
           </div>
         </div>
       </section>
 
-      {/* Servicios */}
-      <section id="servicios" className="py-20 md:py-28 bg-white">
+      {/* Quiénes Somos */}
+      <section id="nosotras" className="py-16 md:py-24" style={{ backgroundColor: "#F7F3E9" }}>
         <div className="container">
-          <p className="font-body text-sm uppercase tracking-widest text-rose-600 text-center mb-3">Lo que ofrecemos</p>
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-gray-900 text-center mb-12">
-            Nuestros servicios
+          <div className="max-w-3xl mx-auto text-center">
+            <p className="font-body text-sm uppercase tracking-widest mb-3" style={{ color: "#8B9D83" }}>Nuestra historia</p>
+            <h2 className="font-display text-3xl md:text-4xl font-bold mb-6" style={{ color: "#5D4E42" }}>
+              Dos amigas, un sueño
+            </h2>
+            <div className="space-y-4 text-left md:text-center">
+              <p className="font-body text-lg leading-relaxed" style={{ color: "#5D4E42" }}>
+                Nos conocimos en la escuela de peluquería hace más de 15 años. Después de trabajar en varios salones de Valencia, decidimos abrir nuestro propio espacio en Benimaclet, el barrio donde crecimos.
+              </p>
+              <p className="font-body leading-relaxed" style={{ color: "#5D4E42", opacity: 0.8 }}>
+                Aquí no hay prisas ni tratamientos que no necesitas. Te escuchamos, te aconsejamos y te cuidamos como si fueras de la familia. Porque en el fondo, después de tantos años, ya lo eres.
+              </p>
+              <p className="font-body leading-relaxed" style={{ color: "#5D4E42", opacity: 0.8 }}>
+                Trabajamos solo con cita para poder dedicarte el tiempo que mereces. Y si llegas un poco tarde porque había cola en la frutería, no pasa nada. Lo entendemos.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Así Trabajamos */}
+      <section className="py-16 md:py-20 bg-white">
+        <div className="container">
+          <p className="font-body text-sm uppercase tracking-widest text-center mb-3" style={{ color: "#8B9D83" }}>Nuestra filosofía</p>
+          <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-10" style={{ color: "#5D4E42" }}>
+            Así trabajamos
           </h2>
-          <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-6 max-w-5xl mx-auto">
-            {services.map((service, index) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 max-w-5xl mx-auto">
+            {benefits.map((benefit, index) => (
               <div 
                 key={index}
-                className="bg-rose-50 rounded-xl p-6 text-center hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+                className="flex flex-col items-center text-center p-5 rounded-xl"
+                style={{ backgroundColor: "#F7F3E9" }}
               >
-                <div className="w-14 h-14 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Scissors className="w-6 h-6 text-rose-600" />
+                <div className="w-12 h-12 rounded-full flex items-center justify-center mb-3" style={{ backgroundColor: "#D4A5A5" }}>
+                  <benefit.icon className="w-5 h-5 text-white" />
                 </div>
-                <h3 className="font-body text-sm font-medium text-gray-900">
-                  {service.name}
-                </h3>
+                <span className="font-body text-sm" style={{ color: "#5D4E42" }}>{benefit.text}</span>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Galería */}
-      <section id="galeria" className="py-20 md:py-28 bg-gray-50">
+      {/* Servicios y Precios */}
+      <section id="servicios" className="py-16 md:py-24" style={{ backgroundColor: "#F7F3E9" }}>
         <div className="container">
-          <p className="font-body text-sm uppercase tracking-widest text-rose-600 text-center mb-3">Galería</p>
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-gray-900 text-center mb-4">
-            Nuestro trabajo
+          <p className="font-body text-sm uppercase tracking-widest text-center mb-3" style={{ color: "#8B9D83" }}>Lo que hacemos</p>
+          <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-4" style={{ color: "#5D4E42" }}>
+            Servicios y precios
           </h2>
-          <p className="font-body text-gray-600 text-center mb-12 max-w-xl mx-auto">
-            Descubre algunos de nuestros trabajos y estilos.
+          <p className="font-body text-center mb-10 max-w-xl mx-auto" style={{ color: "#5D4E42", opacity: 0.7 }}>
+            Precios orientativos. Consulta nuestros bonos de 5 servicios con descuento.
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
+            {services.map((service, index) => (
+              <div 
+                key={index}
+                className="bg-white rounded-xl p-5 flex justify-between items-start hover:shadow-md transition-shadow"
+                style={{ borderLeft: "4px solid #8B9D83" }}
+              >
+                <div className="flex-1">
+                  <h3 className="font-display text-lg font-semibold mb-1" style={{ color: "#5D4E42" }}>
+                    {service.name}
+                  </h3>
+                  <p className="font-body text-sm" style={{ color: "#5D4E42", opacity: 0.6 }}>
+                    {service.description}
+                  </p>
+                </div>
+                <span className="font-display text-lg font-bold ml-4" style={{ color: "#8B9D83" }}>
+                  {service.price}
+                </span>
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-8">
+            <p className="font-body text-sm" style={{ color: "#D4A5A5" }}>
+              Promoción: Trae a una amiga y os hacemos 15% de descuento a las dos
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Galería */}
+      <section id="galeria" className="py-16 md:py-24 bg-white">
+        <div className="container">
+          <p className="font-body text-sm uppercase tracking-widest text-center mb-3" style={{ color: "#8B9D83" }}>Nuestro trabajo</p>
+          <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-4" style={{ color: "#5D4E42" }}>
+            Galería
+          </h2>
+          <p className="font-body text-center mb-10 max-w-xl mx-auto" style={{ color: "#5D4E42", opacity: 0.7 }}>
+            Algunos de nuestros trabajos. Síguenos en Instagram para ver más.
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-5xl mx-auto">
             {gallery.map((item, index) => (
               <div 
                 key={index}
@@ -178,105 +248,108 @@ const DemoPeluqueria = () => {
                 <img 
                   src={item.src} 
                   alt={item.alt}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                <div 
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end"
+                  style={{ background: "linear-gradient(to top, rgba(93, 78, 66, 0.8), transparent)" }}
+                >
                   <p className="font-body text-white text-sm p-4">{item.alt}</p>
                 </div>
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Tarifas */}
-      <section id="tarifas" className="py-20 md:py-28 bg-white">
-        <div className="container">
-          <p className="font-body text-sm uppercase tracking-widest text-rose-600 text-center mb-3">Tarifas</p>
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-gray-900 text-center mb-12">
-            Precios orientativos
-          </h2>
-          <div className="max-w-md mx-auto bg-rose-50 rounded-2xl p-8">
-            <div className="space-y-4">
-              {prices.map((item, index) => (
-                <div 
-                  key={index}
-                  className="flex justify-between items-center py-3 border-b border-rose-100 last:border-0"
-                >
-                  <span className="font-body text-gray-700">{item.name}</span>
-                  <span className="font-display text-lg font-semibold text-gray-900">{item.price}</span>
-                </div>
-              ))}
-            </div>
+          <div className="text-center mt-8">
+            <a 
+              href="https://instagram.com/peluqueriamartaylaura" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 font-body hover:underline"
+              style={{ color: "#8B9D83" }}
+            >
+              <Instagram className="w-5 h-5" />
+              Ver más en @peluqueriamartaylaura
+            </a>
           </div>
         </div>
       </section>
 
-      {/* Por qué elegirnos */}
-      <section className="py-20 md:py-28 bg-rose-50/50">
+      {/* Testimonios */}
+      <section id="opiniones" className="py-16 md:py-24" style={{ backgroundColor: "#F7F3E9" }}>
         <div className="container">
-          <p className="font-body text-sm uppercase tracking-widest text-rose-600 text-center mb-3">Nuestra diferencia</p>
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-gray-900 text-center mb-12">
-            ¿Por qué elegir Lúmina Studio?
+          <p className="font-body text-sm uppercase tracking-widest text-center mb-3" style={{ color: "#8B9D83" }}>Lo que dicen de nosotras</p>
+          <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-10" style={{ color: "#5D4E42" }}>
+            Opiniones del barrio
           </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
-            {benefits.map((benefit, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {testimonials.map((testimonial, index) => (
               <div 
                 key={index}
-                className="flex items-center gap-3 bg-white rounded-xl p-4 shadow-sm"
+                className="bg-white rounded-xl p-6 shadow-sm"
               >
-                <div className="w-8 h-8 bg-rose-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Check className="w-4 h-4 text-rose-600" />
+                <div className="flex gap-1 mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-current" style={{ color: "#D4A5A5" }} />
+                  ))}
                 </div>
-                <span className="font-body text-gray-700">{benefit}</span>
+                <p className="font-body mb-4 italic" style={{ color: "#5D4E42" }}>
+                  "{testimonial.text}"
+                </p>
+                <div>
+                  <p className="font-display font-semibold" style={{ color: "#5D4E42" }}>{testimonial.name}</p>
+                  <p className="font-body text-sm" style={{ color: "#8B9D83" }}>{testimonial.location}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Reserva */}
-      <section className="py-20 md:py-28 bg-gradient-to-br from-rose-600 to-rose-700 text-white">
+      {/* CTA Promoción */}
+      <section className="py-16 md:py-20" style={{ background: "linear-gradient(135deg, #8B9D83 0%, #5D4E42 100%)" }}>
         <div className="container text-center">
-          <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
-            Reserva tu cita
+          <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">
+            Primera visita
           </h2>
-          <p className="font-body text-rose-100 mb-8 max-w-xl mx-auto">
-            Reserva tu cita de forma rápida a través de WhatsApp. Te confirmaremos disponibilidad lo antes posible.
+          <p className="font-body text-white/90 mb-2 text-xl">
+            Corte + peinado por solo 20€
+          </p>
+          <p className="font-body text-white/70 mb-8 max-w-md mx-auto">
+            Si es tu primera vez con nosotras, queremos conocerte. Pide cita y cuéntanos qué buscas.
           </p>
           <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-            <Button size="lg" className="bg-white text-rose-600 hover:bg-rose-50 font-body text-lg px-8 py-6 gap-3">
+            <Button size="lg" className="font-body text-lg px-8 py-6 gap-3" style={{ backgroundColor: "#D4A5A5", color: "#5D4E42" }}>
               <MessageCircle className="w-5 h-5" />
-              Reservar por WhatsApp
+              Reservar oferta
             </Button>
           </a>
         </div>
       </section>
 
       {/* Horario y Ubicación */}
-      <section id="contacto" className="py-20 md:py-28 bg-white">
+      <section id="contacto" className="py-16 md:py-24 bg-white">
         <div className="container">
-          <div className="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {/* Horario */}
             <div className="text-center">
-              <p className="font-body text-sm uppercase tracking-widest text-rose-600 mb-3">Cuándo visitarnos</p>
-              <h3 className="font-display text-2xl font-bold text-gray-900 mb-6">Horario</h3>
-              <div className="bg-rose-50 rounded-xl p-6">
+              <p className="font-body text-sm uppercase tracking-widest mb-3" style={{ color: "#8B9D83" }}>Cuándo venir</p>
+              <h3 className="font-display text-2xl font-bold mb-6" style={{ color: "#5D4E42" }}>Horario</h3>
+              <div className="rounded-xl p-6" style={{ backgroundColor: "#F7F3E9" }}>
                 <div className="flex items-center justify-center gap-2 mb-4">
-                  <Clock className="w-5 h-5 text-rose-600" />
+                  <Clock className="w-5 h-5" style={{ color: "#8B9D83" }} />
                 </div>
                 <div className="space-y-3 font-body">
-                  <div className="flex justify-between items-center py-2 border-b border-rose-100">
-                    <span className="text-gray-600">Lunes a viernes</span>
-                    <span className="font-semibold text-gray-900">9:00 – 19:00</span>
+                  <div className="flex justify-between items-center py-2" style={{ borderBottom: "1px solid #D4A5A5" }}>
+                    <span style={{ color: "#5D4E42", opacity: 0.7 }}>Lunes a viernes</span>
+                    <span className="font-semibold" style={{ color: "#5D4E42" }}>9:30 – 20:00</span>
                   </div>
-                  <div className="flex justify-between items-center py-2 border-b border-rose-100">
-                    <span className="text-gray-600">Sábados</span>
-                    <span className="font-semibold text-gray-900">9:00 – 14:00</span>
+                  <div className="flex justify-between items-center py-2" style={{ borderBottom: "1px solid #D4A5A5" }}>
+                    <span style={{ color: "#5D4E42", opacity: 0.7 }}>Sábados</span>
+                    <span className="font-semibold" style={{ color: "#5D4E42" }}>9:00 – 14:00</span>
                   </div>
                   <div className="flex justify-between items-center py-2">
-                    <span className="text-gray-600">Domingos</span>
-                    <span className="font-semibold text-gray-900">Cerrado</span>
+                    <span style={{ color: "#5D4E42", opacity: 0.7 }}>Domingos</span>
+                    <span className="font-semibold" style={{ color: "#5D4E42" }}>Cerrado</span>
                   </div>
                 </div>
               </div>
@@ -284,17 +357,18 @@ const DemoPeluqueria = () => {
 
             {/* Ubicación */}
             <div className="text-center">
-              <p className="font-body text-sm uppercase tracking-widest text-rose-600 mb-3">Ubicación</p>
-              <h3 className="font-display text-2xl font-bold text-gray-900 mb-6">Dónde estamos</h3>
-              <div className="bg-rose-50 rounded-xl p-6">
+              <p className="font-body text-sm uppercase tracking-widest mb-3" style={{ color: "#8B9D83" }}>Dónde estamos</p>
+              <h3 className="font-display text-2xl font-bold mb-6" style={{ color: "#5D4E42" }}>Ubicación</h3>
+              <div className="rounded-xl p-6" style={{ backgroundColor: "#F7F3E9" }}>
                 <div className="flex items-center justify-center gap-2 mb-4">
-                  <MapPin className="w-5 h-5 text-rose-600" />
+                  <MapPin className="w-5 h-5" style={{ color: "#8B9D83" }} />
                 </div>
-                <p className="font-display text-xl font-semibold text-gray-900 mb-2">Calle del Mar 27</p>
-                <p className="font-body text-gray-600 mb-4">46003 Valencia</p>
-                <p className="font-body text-sm text-gray-500">
-                  Zona céntrica, bien comunicada.<br />
-                  Atendemos con cita previa.
+                <p className="font-display text-xl font-semibold mb-2" style={{ color: "#5D4E42" }}>C/ Emilio Baró, 47</p>
+                <p className="font-body mb-4" style={{ color: "#5D4E42", opacity: 0.7 }}>46020 Benimaclet, Valencia</p>
+                <p className="font-body text-sm" style={{ color: "#5D4E42", opacity: 0.6 }}>
+                  En plena calle principal del barrio.<br />
+                  Fácil aparcamiento en zona azul.<br />
+                  A 2 minutos del mercado.
                 </p>
               </div>
             </div>
@@ -302,94 +376,82 @@ const DemoPeluqueria = () => {
         </div>
       </section>
 
-      {/* Redes Sociales */}
-      <section className="py-16 bg-gray-50">
+      {/* Contacto Final */}
+      <section className="py-16" style={{ backgroundColor: "#F7F3E9" }}>
         <div className="container text-center">
-          <p className="font-body text-sm uppercase tracking-widest text-rose-600 mb-3">Redes sociales</p>
-          <h3 className="font-display text-2xl font-bold text-gray-900 mb-4">Síguenos en redes</h3>
-          <p className="font-body text-gray-600 mb-8">
-            Descubre nuestros últimos trabajos y novedades en redes sociales.
-          </p>
-          <div className="flex items-center justify-center gap-6">
-            <a 
-              href="https://instagram.com/lumina.studio.valencia" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-white rounded-xl px-6 py-3 shadow-sm hover:shadow-md transition-shadow font-body text-gray-700 hover:text-rose-600"
-            >
-              <Instagram className="w-5 h-5" />
-              @lumina.studio.valencia
-            </a>
-            <a 
-              href="https://facebook.com/LuminaStudioValencia" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-white rounded-xl px-6 py-3 shadow-sm hover:shadow-md transition-shadow font-body text-gray-700 hover:text-rose-600"
-            >
-              <Facebook className="w-5 h-5" />
-              Lumina Studio Valencia
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Contacto */}
-      <section className="py-16 bg-white">
-        <div className="container text-center">
-          <p className="font-body text-sm uppercase tracking-widest text-rose-600 mb-3">Escríbenos</p>
-          <h3 className="font-display text-2xl font-bold text-gray-900 mb-8">Contacto</h3>
+          <p className="font-body text-sm uppercase tracking-widest mb-3" style={{ color: "#8B9D83" }}>Contacta</p>
+          <h3 className="font-display text-2xl font-bold mb-6" style={{ color: "#5D4E42" }}>Pide tu cita</h3>
           <div className="max-w-sm mx-auto space-y-4">
             <a 
               href="tel:+34679910422"
-              className="flex items-center justify-center gap-3 bg-rose-50 rounded-xl p-4 font-display text-2xl font-bold text-gray-900 hover:bg-rose-100 transition-colors"
+              className="flex items-center justify-center gap-3 bg-white rounded-xl p-4 font-display text-2xl font-bold hover:shadow-md transition-shadow"
+              style={{ color: "#5D4E42" }}
             >
-              <Phone className="w-6 h-6 text-rose-600" />
+              <Phone className="w-6 h-6" style={{ color: "#8B9D83" }} />
               679 910 422
             </a>
-            <p className="font-body text-gray-600">Calle del Mar 27, Valencia</p>
+            <p className="font-body text-sm" style={{ color: "#5D4E42", opacity: 0.6 }}>
+              También puedes pasarte por el salón para consultas
+            </p>
             <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-              <Button className="w-full bg-rose-600 hover:bg-rose-700 text-white font-body gap-2 py-6">
+              <Button className="w-full font-body gap-2 py-6 text-white" style={{ backgroundColor: "#8B9D83" }}>
                 <MessageCircle className="w-5 h-5" />
-                Reservar por WhatsApp
+                Pedir cita por WhatsApp
               </Button>
             </a>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
+      {/* Redes */}
+      <section className="py-12 bg-white">
         <div className="container text-center">
-          <span className="font-display text-xl font-bold tracking-wide">LÚMINA STUDIO</span>
-          <p className="font-body text-sm text-gray-400 mt-2 mb-6">
-            Peluquería moderna en Valencia
+          <p className="font-body mb-4" style={{ color: "#5D4E42", opacity: 0.7 }}>Síguenos en redes</p>
+          <a 
+            href="https://instagram.com/peluqueriamartaylaura" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-xl px-6 py-3 font-body hover:shadow-md transition-shadow"
+            style={{ backgroundColor: "#F7F3E9", color: "#5D4E42" }}
+          >
+            <Instagram className="w-5 h-5" style={{ color: "#D4A5A5" }} />
+            @peluqueriamartaylaura
+          </a>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-10" style={{ backgroundColor: "#5D4E42" }}>
+        <div className="container text-center">
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <Scissors className="w-5 h-5" style={{ color: "#D4A5A5" }} />
+            <span className="font-display text-lg font-bold text-white">Peluquería Marta y Laura</span>
+          </div>
+          <p className="font-body text-sm text-white/60 mb-6">
+            Tu peluquería de barrio en Benimaclet
           </p>
           <div className="flex items-center justify-center gap-4 mb-6">
             <a 
-              href="https://instagram.com/lumina.studio.valencia" 
+              href="https://instagram.com/peluqueriamartaylaura" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-rose-600 transition-colors"
+              className="w-10 h-10 rounded-full flex items-center justify-center transition-colors"
+              style={{ backgroundColor: "#8B9D83" }}
             >
-              <Instagram className="w-5 h-5" />
-            </a>
-            <a 
-              href="https://facebook.com/LuminaStudioValencia" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-rose-600 transition-colors"
-            >
-              <Facebook className="w-5 h-5" />
+              <Instagram className="w-5 h-5 text-white" />
             </a>
           </div>
-          <div className="border-t border-gray-800 pt-6">
-            <p className="font-body text-xs text-gray-500 flex items-center justify-center gap-1">
-              Diseñado con <Heart className="w-3 h-3 text-rose-500" /> por{" "}
-              <Link to="/" className="text-rose-400 hover:underline inline-flex items-center gap-2">
-                <img src={logo} alt="Valencia Web Studio" className="h-4 w-auto" />
-                Valencia Web Studio
-              </Link>
-            </p>
+          <p className="font-body text-xs text-white/40 mb-4">
+            C/ Emilio Baró, 47 · 46020 Benimaclet, Valencia
+          </p>
+          <div className="pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}>
+            <Link 
+              to="/" 
+              className="inline-flex items-center gap-2 font-body text-xs text-white/40 hover:text-white/60 transition-colors"
+            >
+              <img src={logo} alt="Valencia Web Studio" className="h-4 w-auto opacity-50" />
+              Web diseñada por Valencia Web Studio
+            </Link>
           </div>
         </div>
       </footer>
