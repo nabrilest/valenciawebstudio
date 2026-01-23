@@ -2,13 +2,22 @@ import { Resend } from "https://esm.sh/resend@2.0.0";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
-// Allowed origins for CORS
-const allowedOrigins = [
-  "https://valenciawebstudio.lovable.app",
-  "https://id-preview--7aa2c131-9450-42ef-a61d-462fe8fbd0f3.lovable.app",
-  "http://localhost:5173",
-  "http://localhost:8080",
-];
+// Dynamic origin validation for CORS
+function isValidOrigin(origin: string): boolean {
+  if (!origin) return false;
+  
+  // Allow Lovable domains
+  if (origin.endsWith('.lovable.app') || origin.endsWith('.lovableproject.com')) {
+    return true;
+  }
+  
+  // Allow localhost for development
+  if (origin.startsWith('http://localhost:')) {
+    return true;
+  }
+  
+  return false;
+}
 
 // Simple in-memory rate limiting (resets on function cold start)
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
@@ -59,10 +68,10 @@ Deno.serve(async (req: Request): Promise<Response> => {
   
   // Get the origin header for CORS validation
   const origin = req.headers.get("origin") || "";
-  const isAllowedOrigin = allowedOrigins.some(allowed => origin.startsWith(allowed) || allowed === "*");
+  const isAllowedOrigin = isValidOrigin(origin);
   
   const corsHeaders = {
-    "Access-Control-Allow-Origin": isAllowedOrigin ? origin : allowedOrigins[0],
+    "Access-Control-Allow-Origin": isAllowedOrigin ? origin : "https://valenciawebstudio.lovable.app",
     "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
   };
 
