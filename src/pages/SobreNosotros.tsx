@@ -33,7 +33,7 @@ const SobreNosotros = () => {
               Somos Valencia Web Studio
             </h1>
             <p className="font-body text-lg text-primary-foreground/90">
-              Un estudio pequeño pero con las ideas muy claras 💡
+              Un estudio pequeño pero con las ideas muy claras
             </p>
           </div>
         </div>
