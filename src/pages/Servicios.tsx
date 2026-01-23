@@ -8,22 +8,26 @@ const Servicios = () => {
     {
       icon: Monitor,
       title: "Diseño web a medida",
-      description: "Diseñamos páginas web personalizadas para negocios de Valencia. Cada web se adapta a la identidad, necesidades y objetivos del cliente.",
+      price: "desde 450€",
+      description: "Tu web pensada desde cero. Nada de plantillas ni diseños sacados de una fábrica. Cada proyecto es único, como tu negocio.",
     },
     {
       icon: LayoutIcon,
       title: "Webs corporativas",
-      description: "Webs profesionales pensadas para empresas que quieren transmitir confianza, seriedad y una imagen sólida en internet.",
+      price: "desde 600€",
+      description: "Para empresas que quieren transmitir profesionalidad y confianza. Diseño serio pero cercano, sin aburrir.",
     },
     {
       icon: Zap,
       title: "Landing pages",
-      description: "Páginas enfocadas a conversión, ideales para captar clientes y presentar servicios de forma clara y directa.",
+      price: "desde 350€",
+      description: "Páginas directas al grano. Perfectas para captar clientes, presentar un producto o lanzar una campaña.",
     },
     {
       icon: MousePointer,
       title: "Experiencia de usuario",
-      description: "Diseñamos webs fáciles de usar, claras y agradables, pensadas para guiar al usuario hacia el contacto.",
+      price: "incluido",
+      description: "Webs fáciles de usar y agradables de navegar. Que tus clientes encuentren lo que buscan sin frustrarse.",
     },
   ];
 
@@ -33,33 +37,38 @@ const Servicios = () => {
       description="Diseño web profesional en Valencia. Webs corporativas, diseño a medida y landings con factura."
     >
       {/* Hero Section */}
-      <section className="gradient-primary py-16 md:py-24">
+      <section className="gradient-primary py-10 md:py-14">
         <div className="container">
           <div className="max-w-3xl animate-slide-up">
-            <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-6">
-              Servicios de diseño web en Valencia
+            <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-4">
+              Servicios de diseño web
             </h1>
             <p className="font-body text-lg text-primary-foreground/90">
-              Ofrecemos soluciones de diseño web adaptadas a las necesidades de cada negocio. Desde webs corporativas hasta landing pages optimizadas para conversión.
+              Precios claros desde el principio. Sin sorpresas, sin letra pequeña. Siempre con factura.
             </p>
           </div>
         </div>
       </section>
 
       {/* Services Grid */}
-      <section className="py-16 md:py-24">
+      <section className="py-10 md:py-14">
         <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {services.map((service, index) => (
               <div
                 key={index}
-                className="bg-card rounded-xl p-8 border border-border shadow-sm hover:shadow-lg transition-all duration-300 animate-slide-up"
+                className="bg-card rounded-xl p-6 border border-border shadow-sm hover:shadow-lg hover:border-secondary/30 transition-all duration-300 animate-slide-up"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className="w-14 h-14 rounded-xl bg-accent flex items-center justify-center mb-6">
-                  <service.icon className="w-7 h-7 text-accent-foreground" />
+                <div className="flex items-start justify-between mb-4">
+                  <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center">
+                    <service.icon className="w-6 h-6 text-accent-foreground" />
+                  </div>
+                  <span className="font-body text-sm font-bold text-secondary bg-secondary/10 px-3 py-1 rounded-full">
+                    {service.price}
+                  </span>
                 </div>
-                <h2 className="font-display text-xl md:text-2xl font-bold text-foreground mb-4">
+                <h2 className="font-display text-xl md:text-2xl font-bold text-foreground mb-3">
                   {service.title}
                 </h2>
                 <p className="font-body text-muted-foreground leading-relaxed">
@@ -72,16 +81,16 @@ const Servicios = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="section-alt py-16 md:py-24">
+      <section className="section-alt py-10 md:py-14">
         <div className="container text-center">
-          <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
-            ¿Necesitas una web para tu negocio?
+          <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-3">
+            ¿Tienes dudas sobre precios?
           </h2>
-          <p className="font-body text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
-            Cuéntanos tu proyecto y te asesoramos sin compromiso.
+          <p className="font-body text-lg text-muted-foreground mb-6 max-w-xl mx-auto">
+            Cuéntanos tu proyecto y te hacemos un presupuesto personalizado sin compromiso.
           </p>
           <Button asChild size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-body font-semibold">
-            <Link to="/contacto">Solicitar presupuesto</Link>
+            <Link to="/contacto">Pedir presupuesto</Link>
           </Button>
         </div>
       </section>

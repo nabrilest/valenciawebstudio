@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Send, CheckCircle } from "lucide-react";
+import { Send, CheckCircle, MessageCircle, Instagram } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -55,130 +55,161 @@ const Contacto = () => {
       description="Contacta con Valencia Web Studio. Diseño web profesional en Valencia con factura."
     >
       {/* Hero Section */}
-      <section className="gradient-primary py-16 md:py-24">
+      <section className="gradient-primary py-10 md:py-14">
         <div className="container">
           <div className="max-w-3xl animate-slide-up">
-            <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-6">
-              Contacto · Diseño web en Valencia
+            <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-4">
+              ¿Hablamos?
             </h1>
             <p className="font-body text-lg text-primary-foreground/90">
-              Si tienes un negocio en Valencia y necesitas una página web profesional, cuéntanos tu idea y te responderemos lo antes posible.
+              Cuéntanos tu idea y te respondemos en menos de 24h. Sin compromiso, sin agobios.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Contact Form */}
-      <section className="py-16 md:py-24">
+      {/* Contact Options */}
+      <section className="py-10 md:py-14">
         <div className="container">
-          <div className="max-w-xl mx-auto">
-            {isSubmitted ? (
-              <div className="text-center animate-fade-in">
-                <div className="w-20 h-20 rounded-full bg-accent flex items-center justify-center mx-auto mb-6">
-                  <CheckCircle className="w-10 h-10 text-secondary" />
-                </div>
-                <h2 className="font-display text-2xl font-bold text-foreground mb-4">
-                  ¡Mensaje enviado!
-                </h2>
-                <p className="font-body text-muted-foreground mb-6">
-                  Gracias por contactar con nosotros. Te responderemos lo antes posible.
-                </p>
-                <Button
-                  onClick={() => setIsSubmitted(false)}
-                  variant="outline"
-                  className="font-body"
-                >
-                  Enviar otro mensaje
+          <div className="max-w-3xl mx-auto">
+            {/* Quick Contact */}
+            <div className="bg-accent rounded-xl p-5 md:p-6 mb-8 animate-fade-in">
+              <h2 className="font-display text-xl font-bold text-foreground mb-3">
+                ¿Prefieres escribirnos directamente?
+              </h2>
+              <p className="font-body text-muted-foreground mb-4">
+                También puedes contactarnos por WhatsApp o Instagram. Respondemos rápido 🚀
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <Button asChild size="lg" className="bg-[#25D366] text-white hover:bg-[#25D366]/90 font-body font-semibold">
+                  <a href="https://wa.me/34679910422" target="_blank" rel="noopener noreferrer">
+                    <MessageCircle className="mr-2 h-5 w-5" />
+                    WhatsApp
+                  </a>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="font-body font-semibold border-2">
+                  <a href="https://instagram.com/valenciawebstudio" target="_blank" rel="noopener noreferrer">
+                    <Instagram className="mr-2 h-5 w-5" />
+                    @valenciawebstudio
+                  </a>
                 </Button>
               </div>
-            ) : (
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 animate-fade-in">
-                <div>
-                  <label htmlFor="name" className="font-body text-sm font-medium text-foreground block mb-2">
-                    Nombre
-                  </label>
-                  <Input
-                    id="name"
-                    {...register("name")}
-                    placeholder="Tu nombre"
+            </div>
+
+            {/* Contact Form */}
+            <div className="max-w-xl mx-auto">
+              <h2 className="font-display text-xl font-bold text-foreground mb-5 text-center">
+                O déjanos un mensaje aquí
+              </h2>
+              
+              {isSubmitted ? (
+                <div className="text-center animate-fade-in">
+                  <div className="w-16 h-16 rounded-full bg-accent flex items-center justify-center mx-auto mb-4">
+                    <CheckCircle className="w-8 h-8 text-secondary" />
+                  </div>
+                  <h3 className="font-display text-xl font-bold text-foreground mb-3">
+                    ¡Mensaje enviado!
+                  </h3>
+                  <p className="font-body text-muted-foreground mb-5">
+                    Gracias por escribirnos. Te respondemos lo antes posible.
+                  </p>
+                  <Button
+                    onClick={() => setIsSubmitted(false)}
+                    variant="outline"
                     className="font-body"
-                    disabled={isSubmitting}
-                  />
-                  {errors.name && (
-                    <p className="font-body text-sm text-destructive mt-1">{errors.name.message}</p>
-                  )}
+                  >
+                    Enviar otro mensaje
+                  </Button>
                 </div>
+              ) : (
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 animate-fade-in">
+                  <div>
+                    <label htmlFor="name" className="font-body text-sm font-medium text-foreground block mb-2">
+                      Nombre
+                    </label>
+                    <Input
+                      id="name"
+                      {...register("name")}
+                      placeholder="Tu nombre"
+                      className="font-body"
+                      disabled={isSubmitting}
+                    />
+                    {errors.name && (
+                      <p className="font-body text-sm text-destructive mt-1">{errors.name.message}</p>
+                    )}
+                  </div>
 
-                <div>
-                  <label htmlFor="email" className="font-body text-sm font-medium text-foreground block mb-2">
-                    Email
-                  </label>
-                  <Input
-                    id="email"
-                    type="email"
-                    {...register("email")}
-                    placeholder="tu@email.com"
-                    className="font-body"
-                    disabled={isSubmitting}
-                  />
-                  {errors.email && (
-                    <p className="font-body text-sm text-destructive mt-1">{errors.email.message}</p>
+                  <div>
+                    <label htmlFor="email" className="font-body text-sm font-medium text-foreground block mb-2">
+                      Email
+                    </label>
+                    <Input
+                      id="email"
+                      type="email"
+                      {...register("email")}
+                      placeholder="tu@email.com"
+                      className="font-body"
+                      disabled={isSubmitting}
+                    />
+                    {errors.email && (
+                      <p className="font-body text-sm text-destructive mt-1">{errors.email.message}</p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label htmlFor="message" className="font-body text-sm font-medium text-foreground block mb-2">
+                      Mensaje
+                    </label>
+                    <Textarea
+                      id="message"
+                      {...register("message")}
+                      placeholder="Cuéntanos tu proyecto..."
+                      rows={4}
+                      className="font-body resize-none"
+                      disabled={isSubmitting}
+                    />
+                    {errors.message && (
+                      <p className="font-body text-sm text-destructive mt-1">{errors.message.message}</p>
+                    )}
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <Checkbox
+                      id="privacy"
+                      checked={privacyValue}
+                      onCheckedChange={(checked) => setValue("privacy", checked as boolean)}
+                      disabled={isSubmitting}
+                      className="mt-0.5"
+                    />
+                    <label htmlFor="privacy" className="font-body text-sm text-muted-foreground cursor-pointer">
+                      He leído y acepto la{" "}
+                      <Link to="/politica-privacidad" className="text-secondary hover:underline">
+                        política de privacidad
+                      </Link>
+                    </label>
+                  </div>
+                  {errors.privacy && (
+                    <p className="font-body text-sm text-destructive">{errors.privacy.message}</p>
                   )}
-                </div>
 
-                <div>
-                  <label htmlFor="message" className="font-body text-sm font-medium text-foreground block mb-2">
-                    Mensaje
-                  </label>
-                  <Textarea
-                    id="message"
-                    {...register("message")}
-                    placeholder="Cuéntanos tu proyecto..."
-                    rows={5}
-                    className="font-body resize-none"
+                  <Button
+                    type="submit"
+                    size="lg"
+                    className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90 font-body font-semibold"
                     disabled={isSubmitting}
-                  />
-                  {errors.message && (
-                    <p className="font-body text-sm text-destructive mt-1">{errors.message.message}</p>
-                  )}
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <Checkbox
-                    id="privacy"
-                    checked={privacyValue}
-                    onCheckedChange={(checked) => setValue("privacy", checked as boolean)}
-                    disabled={isSubmitting}
-                    className="mt-0.5"
-                  />
-                  <label htmlFor="privacy" className="font-body text-sm text-muted-foreground cursor-pointer">
-                    He leído y acepto la{" "}
-                    <Link to="/politica-privacidad" className="text-secondary hover:underline">
-                      política de privacidad
-                    </Link>
-                  </label>
-                </div>
-                {errors.privacy && (
-                  <p className="font-body text-sm text-destructive">{errors.privacy.message}</p>
-                )}
-
-                <Button
-                  type="submit"
-                  size="lg"
-                  className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90 font-body font-semibold"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? (
-                    "Enviando..."
-                  ) : (
-                    <>
-                      Enviar mensaje
-                      <Send className="ml-2 h-5 w-5" />
-                    </>
-                  )}
-                </Button>
-              </form>
-            )}
+                  >
+                    {isSubmitting ? (
+                      "Enviando..."
+                    ) : (
+                      <>
+                        Enviar mensaje
+                        <Send className="ml-2 h-5 w-5" />
+                      </>
+                    )}
+                  </Button>
+                </form>
+              )}
+            </div>
           </div>
         </div>
       </section>
