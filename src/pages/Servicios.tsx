@@ -1,40 +1,56 @@
 import { Link } from "react-router-dom";
-import { Monitor, Layout as LayoutIcon, Zap, MousePointer } from "lucide-react";
+import { Check, Globe, Layers, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import Layout from "@/components/Layout";
 
 const Servicios = () => {
-  const services = [
+  const packs = [
     {
-      icon: Monitor,
-      title: "Diseño web a medida",
-      price: "desde 450€",
-      description: "Tu web pensada desde cero. Nada de plantillas ni diseños sacados de una fábrica. Cada proyecto es único, como tu negocio.",
+      icon: Globe,
+      title: "Web básica profesional",
+      price: "149",
+      features: [
+        "1 página con secciones (inicio, servicios, contacto)",
+        "Diseño limpio y moderno",
+        "Web adaptable a móvil y tablet",
+        "Formulario de contacto o botón de WhatsApp",
+        "Textos facilitados por el cliente",
+        "Entrega rápida",
+      ],
     },
     {
-      icon: LayoutIcon,
-      title: "Webs corporativas",
-      price: "desde 600€",
-      description: "Para empresas que quieren transmitir profesionalidad y confianza. Diseño serio pero cercano, sin aburrir.",
+      icon: Layers,
+      title: "Web básica ampliada",
+      price: "189",
+      featured: true,
+      features: [
+        "Hasta 3 páginas (Inicio, Servicios, Contacto)",
+        "Diseño personalizado sencillo",
+        "Web responsive",
+        "Enlaces a redes sociales",
+        "Optimización básica de velocidad",
+        "Asesoramiento inicial",
+      ],
     },
     {
-      icon: Zap,
-      title: "Landing pages",
-      price: "desde 350€",
-      description: "Páginas directas al grano. Perfectas para captar clientes, presentar un producto o lanzar una campaña.",
-    },
-    {
-      icon: MousePointer,
-      title: "Experiencia de usuario",
-      price: "incluido",
-      description: "Webs fáciles de usar y agradables de navegar. Que tus clientes encuentren lo que buscan sin frustrarse.",
+      icon: Target,
+      title: "Landing page",
+      price: "129",
+      subtitle: "Una landing page es una página web de una sola página, diseñada para que el visitante realice una acción concreta, como contactar, solicitar información o comprar, sin distracciones.",
+      features: [
+        "Página única enfocada a conversión",
+        "Estructura clara y directa",
+        "Llamadas a la acción visibles",
+        "Versión móvil incluida",
+      ],
     },
   ];
 
   return (
     <Layout
       title="Servicios de diseño web en Valencia | Valencia Web Studio"
-      description="Diseño web profesional en Valencia. Webs corporativas, diseño a medida y landings con factura."
+      description="Diseño web profesional en Valencia. Packs cerrados con precios económicos y sin sorpresas."
     >
       {/* Hero Section */}
       <section className="gradient-primary py-10 md:py-14">
@@ -44,38 +60,96 @@ const Servicios = () => {
               Servicios de diseño web
             </h1>
             <p className="font-body text-lg text-primary-foreground/90">
-              Precios claros desde el principio. Sin sorpresas, sin letra pequeña. Siempre con factura.
+              Packs cerrados con precios claros. Sin sorpresas, sin letra pequeña.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Services Grid */}
+      {/* Intro Section */}
       <section className="py-10 md:py-14">
         <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {services.map((service, index) => (
-              <div
+          <div className="max-w-3xl mx-auto text-center animate-slide-up">
+            <p className="font-body text-lg text-muted-foreground leading-relaxed">
+              Trabajo con packs cerrados y bien definidos, lo que me permite ofrecer precios económicos sin renunciar a la calidad. Cada proyecto tiene un alcance claro desde el inicio, así sabes exactamente qué incluye tu web y evitas costes inesperados.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Packs Grid */}
+      <section className="pb-10 md:pb-14">
+        <div className="container">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {packs.map((pack, index) => (
+              <Card
                 key={index}
-                className="bg-card rounded-xl p-6 border border-border shadow-sm hover:shadow-lg hover:border-secondary/30 transition-all duration-300 animate-slide-up"
+                className={`relative overflow-hidden transition-all duration-300 hover:shadow-xl animate-slide-up ${
+                  pack.featured 
+                    ? "border-secondary shadow-lg ring-2 ring-secondary/20" 
+                    : "border-border hover:border-secondary/30"
+                }`}
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center">
-                    <service.icon className="w-6 h-6 text-accent-foreground" />
+                {pack.featured && (
+                  <div className="absolute top-0 right-0 bg-secondary text-secondary-foreground text-xs font-semibold px-3 py-1 rounded-bl-lg">
+                    Más popular
                   </div>
-                  <span className="font-body text-sm font-bold text-secondary bg-secondary/10 px-3 py-1 rounded-full">
-                    {service.price}
-                  </span>
-                </div>
-                <h2 className="font-display text-xl md:text-2xl font-bold text-foreground mb-3">
-                  {service.title}
-                </h2>
-                <p className="font-body text-muted-foreground leading-relaxed">
-                  {service.description}
-                </p>
-              </div>
+                )}
+                <CardHeader className="text-center pb-4">
+                  <div className={`w-14 h-14 rounded-xl mx-auto mb-4 flex items-center justify-center ${
+                    pack.featured ? "bg-secondary/10" : "bg-accent"
+                  }`}>
+                    <pack.icon className={`w-7 h-7 ${pack.featured ? "text-secondary" : "text-accent-foreground"}`} />
+                  </div>
+                  <CardTitle className="font-display text-xl md:text-2xl text-foreground">
+                    {pack.title}
+                  </CardTitle>
+                  <div className="mt-3">
+                    <span className="font-display text-4xl font-bold text-foreground">{pack.price}</span>
+                    <span className="font-body text-muted-foreground ml-1">€</span>
+                  </div>
+                  {pack.subtitle && (
+                    <CardDescription className="mt-3 text-sm leading-relaxed">
+                      {pack.subtitle}
+                    </CardDescription>
+                  )}
+                </CardHeader>
+                <CardContent className="pt-0">
+                  <ul className="space-y-3">
+                    {pack.features.map((feature, featureIndex) => (
+                      <li key={featureIndex} className="flex items-start gap-3">
+                        <Check className="w-5 h-5 text-secondary flex-shrink-0 mt-0.5" />
+                        <span className="font-body text-sm text-muted-foreground">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Button 
+                    asChild 
+                    className={`w-full mt-6 font-body font-semibold ${
+                      pack.featured 
+                        ? "bg-secondary text-secondary-foreground hover:bg-secondary/90" 
+                        : "bg-primary text-primary-foreground hover:bg-primary/90"
+                    }`}
+                  >
+                    <Link to="/contacto">Solicitar presupuesto</Link>
+                  </Button>
+                </CardContent>
+              </Card>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Disclaimer Note */}
+      <section className="pb-10 md:pb-14">
+        <div className="container">
+          <div className="max-w-2xl mx-auto">
+            <div className="bg-muted/50 rounded-xl p-5 border border-border">
+              <p className="font-body text-sm text-muted-foreground text-center leading-relaxed">
+                No incluye dominio, hosting ni mantenimiento. Cambios adicionales o páginas extra se presupuestan aparte.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -84,13 +158,13 @@ const Servicios = () => {
       <section className="section-alt py-10 md:py-14">
         <div className="container text-center">
           <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-3">
-            ¿Tienes dudas sobre precios?
+            ¿Tienes dudas sobre los packs?
           </h2>
           <p className="font-body text-lg text-muted-foreground mb-6 max-w-xl mx-auto">
-            Cuéntanos tu proyecto y te hacemos un presupuesto personalizado sin compromiso.
+            Cuéntame tu proyecto y te ayudo a elegir el pack que mejor se adapta a tus necesidades.
           </p>
           <Button asChild size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-body font-semibold">
-            <Link to="/contacto">Pedir presupuesto</Link>
+            <Link to="/contacto">Contactar</Link>
           </Button>
         </div>
       </section>
