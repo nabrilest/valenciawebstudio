@@ -1,6 +1,9 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Phone, Clock, MapPin, Scissors, Heart, Instagram, MessageCircle, Star, Users, Sparkles } from "lucide-react";
+import { ArrowLeft, Phone, Clock, MapPin, Scissors, Heart, Instagram, MessageCircle, Star, Users, Sparkles, Menu, Home, Image, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import logo from "@/assets/logo.png";
 import heroImage from "@/assets/lumina-hero.jpg";
 import gallery1 from "@/assets/gallery-1.jpg";
@@ -13,6 +16,9 @@ import gallery7 from "@/assets/gallery-7.jpg";
 import gallery8 from "@/assets/gallery-8.jpg";
 
 const DemoPeluqueria = () => {
+  const [selectedImage, setSelectedImage] = useState<{ src: string; alt: string } | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const services = [
     { name: "Corte mujer", price: "desde 18€", description: "Corte personalizado con lavado y secado" },
     { name: "Corte hombre", price: "desde 12€", description: "Corte clásico o moderno con acabado" },
@@ -63,7 +69,20 @@ const DemoPeluqueria = () => {
     { icon: Star, text: "Descuento 10% para mayores de 65" },
   ];
 
+  const navItems = [
+    { href: "#inicio", label: "Inicio", icon: Home },
+    { href: "#nosotras", label: "Nosotras", icon: Users },
+    { href: "#servicios", label: "Servicios", icon: Scissors },
+    { href: "#galeria", label: "Galería", icon: Image },
+    { href: "#opiniones", label: "Opiniones", icon: MessageSquare },
+    { href: "#contacto", label: "Contacto", icon: Phone },
+  ];
+
   const whatsappLink = "https://wa.me/34679910422?text=Hola!%20Quiero%20pedir%20cita%20en%20la%20peluquer%C3%ADa";
+
+  const handleNavClick = () => {
+    setMenuOpen(false);
+  };
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#F7F3E9" }}>
@@ -86,22 +105,88 @@ const DemoPeluqueria = () => {
       {/* Header */}
       <header className="bg-white/95 backdrop-blur-sm border-b sticky top-0 z-40" style={{ borderColor: "#D4A5A5" }}>
         <div className="container flex items-center justify-between h-16">
-          <div className="flex items-center gap-2">
-            <Scissors className="w-6 h-6" style={{ color: "#8B9D83" }} />
-            <span className="font-display text-xl font-bold" style={{ color: "#5D4E42" }}>Marta y Laura</span>
+          <div className="flex items-center gap-3">
+            {/* Mobile Menu Button */}
+            <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
+              <SheetTrigger asChild>
+                <button 
+                  className="p-2 rounded-lg hover:bg-gray-100 transition-colors md:hidden"
+                  aria-label="Abrir menú"
+                >
+                  <Menu className="w-6 h-6" style={{ color: "#5D4E42" }} />
+                </button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-80 p-0" style={{ backgroundColor: "#F7F3E9" }}>
+                <SheetHeader className="p-6 border-b" style={{ borderColor: "#D4A5A5" }}>
+                  <SheetTitle className="flex items-center gap-2" style={{ color: "#5D4E42" }}>
+                    <Scissors className="w-6 h-6" style={{ color: "#8B9D83" }} />
+                    Marta y Laura
+                  </SheetTitle>
+                </SheetHeader>
+                <nav className="p-4 space-y-2">
+                  {navItems.map((item) => (
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      onClick={handleNavClick}
+                      className="flex items-center gap-3 p-3 rounded-lg hover:bg-white transition-colors font-body"
+                      style={{ color: "#5D4E42" }}
+                    >
+                      <item.icon className="w-5 h-5" style={{ color: "#8B9D83" }} />
+                      {item.label}
+                    </a>
+                  ))}
+                </nav>
+                <div className="p-4 border-t mt-auto" style={{ borderColor: "#D4A5A5" }}>
+                  <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+                    <Button className="w-full font-body gap-2 text-white" style={{ backgroundColor: "#8B9D83" }}>
+                      <MessageCircle className="w-5 h-5" />
+                      Pedir cita
+                    </Button>
+                  </a>
+                  <div className="flex items-center justify-center gap-4 mt-4">
+                    <a 
+                      href="https://instagram.com/peluqueriamartaylaura" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 rounded-full flex items-center justify-center"
+                      style={{ backgroundColor: "#D4A5A5" }}
+                    >
+                      <Instagram className="w-5 h-5 text-white" />
+                    </a>
+                    <a 
+                      href="tel:+34679910422"
+                      className="w-10 h-10 rounded-full flex items-center justify-center"
+                      style={{ backgroundColor: "#D4A5A5" }}
+                    >
+                      <Phone className="w-5 h-5 text-white" />
+                    </a>
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
+
+            <div className="flex items-center gap-2">
+              <Scissors className="w-6 h-6" style={{ color: "#8B9D83" }} />
+              <span className="font-display text-xl font-bold" style={{ color: "#5D4E42" }}>Marta y Laura</span>
+            </div>
           </div>
           <nav className="hidden md:flex items-center gap-8">
-            <a href="#inicio" className="font-body text-sm hover:opacity-70 transition-opacity" style={{ color: "#5D4E42" }}>Inicio</a>
-            <a href="#nosotras" className="font-body text-sm hover:opacity-70 transition-opacity" style={{ color: "#5D4E42" }}>Nosotras</a>
-            <a href="#servicios" className="font-body text-sm hover:opacity-70 transition-opacity" style={{ color: "#5D4E42" }}>Servicios</a>
-            <a href="#galeria" className="font-body text-sm hover:opacity-70 transition-opacity" style={{ color: "#5D4E42" }}>Galería</a>
-            <a href="#opiniones" className="font-body text-sm hover:opacity-70 transition-opacity" style={{ color: "#5D4E42" }}>Opiniones</a>
-            <a href="#contacto" className="font-body text-sm hover:opacity-70 transition-opacity" style={{ color: "#5D4E42" }}>Contacto</a>
+            {navItems.map((item) => (
+              <a 
+                key={item.href}
+                href={item.href} 
+                className="font-body text-sm hover:opacity-70 transition-opacity" 
+                style={{ color: "#5D4E42" }}
+              >
+                {item.label}
+              </a>
+            ))}
           </nav>
           <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
             <Button className="font-body text-sm gap-2 text-white" style={{ backgroundColor: "#8B9D83" }}>
               <MessageCircle className="w-4 h-4" />
-              Pedir cita
+              <span className="hidden sm:inline">Pedir cita</span>
             </Button>
           </a>
         </div>
@@ -237,13 +322,15 @@ const DemoPeluqueria = () => {
             Galería
           </h2>
           <p className="font-body text-center mb-10 max-w-xl mx-auto" style={{ color: "#5D4E42", opacity: 0.7 }}>
-            Algunos de nuestros trabajos. Síguenos en Instagram para ver más.
+            Haz clic en cualquier imagen para verla en grande. Síguenos en Instagram para ver más.
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-5xl mx-auto">
             {gallery.map((item, index) => (
-              <div 
+              <button 
                 key={index}
-                className="group relative aspect-square overflow-hidden rounded-xl"
+                onClick={() => setSelectedImage(item)}
+                className="group relative aspect-square overflow-hidden rounded-xl cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2"
+                style={{ "--tw-ring-color": "#8B9D83" } as React.CSSProperties}
               >
                 <img 
                   src={item.src} 
@@ -256,7 +343,7 @@ const DemoPeluqueria = () => {
                 >
                   <p className="font-body text-white text-sm p-4">{item.alt}</p>
                 </div>
-              </div>
+              </button>
             ))}
           </div>
           <div className="text-center mt-8">
@@ -273,6 +360,27 @@ const DemoPeluqueria = () => {
           </div>
         </div>
       </section>
+
+      {/* Image Lightbox Dialog */}
+      <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
+        <DialogContent className="max-w-4xl p-0 border-0 bg-transparent overflow-hidden">
+          {selectedImage && (
+            <div className="relative">
+              <img 
+                src={selectedImage.src} 
+                alt={selectedImage.alt}
+                className="w-full h-auto max-h-[85vh] object-contain rounded-lg"
+              />
+              <div 
+                className="absolute bottom-0 left-0 right-0 p-4 rounded-b-lg"
+                style={{ background: "linear-gradient(to top, rgba(93, 78, 66, 0.9), transparent)" }}
+              >
+                <p className="font-display text-white text-lg text-center">{selectedImage.alt}</p>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
 
       {/* Testimonios */}
       <section id="opiniones" className="py-16 md:py-24" style={{ backgroundColor: "#F7F3E9" }}>
