@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { 
   Phone, 
@@ -11,52 +12,203 @@ import {
   UtensilsCrossed,
   BookOpen,
   Navigation,
-  Mail
+  Mail,
+  ArrowLeft,
+  MessageCircle,
+  
+  AlertTriangle
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import logo from "@/assets/logo.png";
 
-const menuCategories = [
+interface MenuItem {
+  name: string;
+  description: string;
+  price: string;
+  image: string;
+  ingredients: string[];
+  allergens: string[];
+}
+
+interface MenuCategory {
+  name: string;
+  items: MenuItem[];
+}
+
+const menuCategories: MenuCategory[] = [
   {
     name: "Antipasti",
     items: [
-      { name: "Burrata con Pomodorini", description: "Burrata cremosa con tomates cherry confitados y albahaca fresca", price: "14€" },
-      { name: "Carpaccio di Manzo", description: "Finas láminas de ternera con rúcula, parmesano y aceite de trufa", price: "16€" },
-      { name: "Vitello Tonnato", description: "Ternera asada con salsa de atún y alcaparras", price: "15€" },
-      { name: "Bruschetta Tradizionale", description: "Pan tostado con tomate fresco, ajo y albahaca", price: "8€" },
+      { 
+        name: "Burrata con Pomodorini", 
+        description: "Burrata cremosa con tomates cherry confitados y albahaca fresca", 
+        price: "14€",
+        image: "https://images.unsplash.com/photo-1626200419199-391ae4be7a41?w=400&q=80",
+        ingredients: ["Burrata fresca", "Tomates cherry", "Albahaca", "Aceite de oliva virgen extra", "Sal Maldon"],
+        allergens: ["Lácteos"]
+      },
+      { 
+        name: "Carpaccio di Manzo", 
+        description: "Finas láminas de ternera con rúcula, parmesano y aceite de trufa", 
+        price: "16€",
+        image: "https://images.unsplash.com/photo-1588168333986-5078d3ae3976?w=400&q=80",
+        ingredients: ["Solomillo de ternera", "Rúcula", "Parmigiano Reggiano", "Aceite de trufa", "Limón"],
+        allergens: ["Lácteos"]
+      },
+      { 
+        name: "Vitello Tonnato", 
+        description: "Ternera asada con salsa de atún y alcaparras", 
+        price: "15€",
+        image: "https://images.unsplash.com/photo-1599021419847-d8a7a6aba5b4?w=400&q=80",
+        ingredients: ["Redondo de ternera", "Atún en aceite", "Alcaparras", "Anchoas", "Mayonesa", "Limón"],
+        allergens: ["Pescado", "Huevo"]
+      },
+      { 
+        name: "Bruschetta Tradizionale", 
+        description: "Pan tostado con tomate fresco, ajo y albahaca", 
+        price: "8€",
+        image: "https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?w=400&q=80",
+        ingredients: ["Pan rústico", "Tomate pera", "Ajo", "Albahaca fresca", "Aceite de oliva"],
+        allergens: ["Gluten"]
+      },
     ]
   },
   {
     name: "Pasta Fresca",
     items: [
-      { name: "Tagliatelle al Ragù", description: "Pasta fresca con ragú de ternera cocinado 6 horas", price: "16€" },
-      { name: "Cacio e Pepe", description: "Tonnarelli con pecorino romano y pimienta negra", price: "14€" },
-      { name: "Carbonara Autentica", description: "Guanciale, yema de huevo, pecorino y pimienta", price: "15€" },
-      { name: "Pappardelle ai Funghi", description: "Pasta ancha con setas de temporada y trufa", price: "18€" },
+      { 
+        name: "Tagliatelle al Ragù", 
+        description: "Pasta fresca con ragú de ternera cocinado 6 horas", 
+        price: "16€",
+        image: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&q=80",
+        ingredients: ["Tagliatelle frescas", "Ternera picada", "Cerdo picado", "Tomate", "Zanahoria", "Apio", "Cebolla", "Vino tinto"],
+        allergens: ["Gluten", "Huevo"]
+      },
+      { 
+        name: "Cacio e Pepe", 
+        description: "Tonnarelli con pecorino romano y pimienta negra", 
+        price: "14€",
+        image: "https://images.unsplash.com/photo-1673442632805-0c46c228eb04?w=400&q=80",
+        ingredients: ["Tonnarelli frescos", "Pecorino Romano DOP", "Pimienta negra en grano"],
+        allergens: ["Gluten", "Lácteos", "Huevo"]
+      },
+      { 
+        name: "Carbonara Autentica", 
+        description: "Guanciale, yema de huevo, pecorino y pimienta", 
+        price: "15€",
+        image: "https://images.unsplash.com/photo-1612874742237-6526221588e3?w=400&q=80",
+        ingredients: ["Rigatoni frescos", "Guanciale", "Yema de huevo", "Pecorino Romano", "Pimienta negra"],
+        allergens: ["Gluten", "Huevo", "Lácteos"]
+      },
+      { 
+        name: "Pappardelle ai Funghi", 
+        description: "Pasta ancha con setas de temporada y trufa", 
+        price: "18€",
+        image: "https://images.unsplash.com/photo-1556761223-4c4282c73f77?w=400&q=80",
+        ingredients: ["Pappardelle frescas", "Porcini", "Shiitake", "Champiñones", "Trufa negra", "Nata", "Parmesano"],
+        allergens: ["Gluten", "Lácteos", "Huevo"]
+      },
     ]
   },
   {
     name: "Pizze del Forno",
     items: [
-      { name: "Margherita DOP", description: "Tomate San Marzano, mozzarella di bufala y albahaca", price: "12€" },
-      { name: "Diavola", description: "Tomate, mozzarella, salame picante y aceite de guindilla", price: "14€" },
-      { name: "Quattro Formaggi", description: "Mozzarella, gorgonzola, parmesano y taleggio", price: "15€" },
-      { name: "Tartufo e Prosciutto", description: "Crema de trufa, jamón de Parma y rúcula", price: "18€" },
+      { 
+        name: "Margherita DOP", 
+        description: "Tomate San Marzano, mozzarella di bufala y albahaca", 
+        price: "12€",
+        image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&q=80",
+        ingredients: ["Masa madre 48h", "Tomate San Marzano DOP", "Mozzarella di Bufala", "Albahaca fresca", "Aceite de oliva"],
+        allergens: ["Gluten", "Lácteos"]
+      },
+      { 
+        name: "Diavola", 
+        description: "Tomate, mozzarella, salame picante y aceite de guindilla", 
+        price: "14€",
+        image: "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=400&q=80",
+        ingredients: ["Masa madre 48h", "Tomate", "Mozzarella fior di latte", "Salame calabrese", "Aceite de guindilla"],
+        allergens: ["Gluten", "Lácteos"]
+      },
+      { 
+        name: "Quattro Formaggi", 
+        description: "Mozzarella, gorgonzola, parmesano y taleggio", 
+        price: "15€",
+        image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&q=80",
+        ingredients: ["Masa madre 48h", "Mozzarella", "Gorgonzola DOP", "Parmigiano Reggiano", "Taleggio"],
+        allergens: ["Gluten", "Lácteos"]
+      },
+      { 
+        name: "Tartufo e Prosciutto", 
+        description: "Crema de trufa, jamón de Parma y rúcula", 
+        price: "18€",
+        image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&q=80",
+        ingredients: ["Masa madre 48h", "Crema de trufa", "Prosciutto di Parma DOP", "Rúcula", "Parmesano"],
+        allergens: ["Gluten", "Lácteos"]
+      },
     ]
   },
   {
     name: "Secondi Piatti",
     items: [
-      { name: "Ossobuco alla Milanese", description: "Jarrete de ternera estofado con gremolata", price: "24€" },
-      { name: "Saltimbocca alla Romana", description: "Ternera con jamón, salvia y vino blanco", price: "22€" },
-      { name: "Branzino al Forno", description: "Lubina al horno con patatas y aceitunas taggiasche", price: "26€" },
+      { 
+        name: "Ossobuco alla Milanese", 
+        description: "Jarrete de ternera estofado con gremolata", 
+        price: "24€",
+        image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=400&q=80",
+        ingredients: ["Jarrete de ternera", "Vino blanco", "Caldo de carne", "Gremolata (limón, ajo, perejil)", "Risotto alla milanese"],
+        allergens: ["Lácteos", "Sulfitos"]
+      },
+      { 
+        name: "Saltimbocca alla Romana", 
+        description: "Ternera con jamón, salvia y vino blanco", 
+        price: "22€",
+        image: "https://images.unsplash.com/photo-1432139555190-58524dae6a55?w=400&q=80",
+        ingredients: ["Escalopines de ternera", "Prosciutto crudo", "Salvia fresca", "Mantequilla", "Vino blanco"],
+        allergens: ["Lácteos", "Sulfitos"]
+      },
+      { 
+        name: "Branzino al Forno", 
+        description: "Lubina al horno con patatas y aceitunas taggiasche", 
+        price: "26€",
+        image: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=400&q=80",
+        ingredients: ["Lubina salvaje", "Patatas", "Aceitunas taggiasche", "Tomates cherry", "Romero", "Limón"],
+        allergens: ["Pescado"]
+      },
     ]
   },
   {
     name: "Dolci",
     items: [
-      { name: "Tiramisù della Casa", description: "Receta tradicional con mascarpone y café", price: "8€" },
-      { name: "Panna Cotta", description: "Con coulis de frutos rojos de temporada", price: "7€" },
-      { name: "Cannoli Siciliani", description: "Rellenos de ricotta, pistachos y chocolate", price: "9€" },
+      { 
+        name: "Tiramisù della Casa", 
+        description: "Receta tradicional con mascarpone y café", 
+        price: "8€",
+        image: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=400&q=80",
+        ingredients: ["Mascarpone", "Huevos", "Savoiardi", "Café espresso", "Cacao amargo", "Marsala"],
+        allergens: ["Huevo", "Lácteos", "Gluten", "Sulfitos"]
+      },
+      { 
+        name: "Panna Cotta", 
+        description: "Con coulis de frutos rojos de temporada", 
+        price: "7€",
+        image: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400&q=80",
+        ingredients: ["Nata fresca", "Vainilla de Madagascar", "Fresas", "Frambuesas", "Arándanos"],
+        allergens: ["Lácteos"]
+      },
+      { 
+        name: "Cannoli Siciliani", 
+        description: "Rellenos de ricotta, pistachos y chocolate", 
+        price: "9€",
+        image: "https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&q=80",
+        ingredients: ["Masa frita crujiente", "Ricotta fresca", "Pistachos de Bronte", "Chocolate negro", "Naranja confitada"],
+        allergens: ["Gluten", "Lácteos", "Frutos secos", "Huevo"]
+      },
     ]
   }
 ];
@@ -85,17 +237,37 @@ const quickLinks = [
   { icon: Phone, label: "Contacto", href: "#contacto" },
 ];
 
-const whatsappLink = "https://wa.me/34600000000?text=Hola,%20me%20gustaría%20hacer%20una%20reserva%20en%20Trattoria%20San%20Luca";
+const whatsappNumber = "34600000000";
+const whatsappLink = `https://wa.me/${whatsappNumber}?text=Hola,%20me%20gustaría%20hacer%20una%20reserva%20en%20Trattoria%20San%20Luca`;
 
 const DemoTrattoria = () => {
+  const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
+
+  const allergenColors: Record<string, string> = {
+    "Gluten": "bg-amber-100 text-amber-800",
+    "Lácteos": "bg-blue-100 text-blue-800",
+    "Huevo": "bg-yellow-100 text-yellow-800",
+    "Pescado": "bg-cyan-100 text-cyan-800",
+    "Frutos secos": "bg-orange-100 text-orange-800",
+    "Sulfitos": "bg-purple-100 text-purple-800",
+  };
+
   return (
     <div className="min-h-screen bg-[#FDF8F3]">
-      {/* Demo Banner */}
-      <div className="bg-primary text-primary-foreground text-center py-2 px-4 text-sm">
-        <span className="opacity-90">Esto es una demo de </span>
-        <Link to="/proyectos" className="font-semibold underline hover:no-underline">
-          Valencia Web Studio
-        </Link>
+      {/* Demo Banner - Like Peluquería */}
+      <div style={{ background: "linear-gradient(135deg, #2C1810 0%, #D4A574 100%)" }} className="text-white py-3">
+        <div className="container flex items-center justify-between flex-wrap gap-2">
+          <div className="flex items-center gap-3">
+            <img src={logo} alt="Valencia Web Studio" className="h-8 w-auto" />
+            <p className="font-body text-sm">
+              <strong>Demo:</strong> Web de ejemplo diseñada por Valencia Web Studio
+            </p>
+          </div>
+          <Link to="/proyectos" className="flex items-center gap-2 text-sm hover:underline font-body">
+            <ArrowLeft className="w-4 h-4" />
+            Volver a proyectos
+          </Link>
+        </div>
       </div>
 
       {/* Header */}
@@ -166,8 +338,7 @@ const DemoTrattoria = () => {
             <Button 
               asChild 
               size="lg"
-              variant="outline"
-              className="border-[#F5E6D3] text-[#F5E6D3] hover:bg-[#F5E6D3]/10 font-semibold text-lg px-8"
+              className="bg-[#F5E6D3] hover:bg-[#E8DED4] text-[#2C1810] font-semibold text-lg px-8"
             >
               <a href="#carta">
                 <BookOpen className="mr-2 h-5 w-5" />
@@ -277,7 +448,7 @@ const DemoTrattoria = () => {
         </div>
       </section>
 
-      {/* Menu Section */}
+      {/* Menu Section with Images */}
       <section id="carta" className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
@@ -288,8 +459,7 @@ const DemoTrattoria = () => {
               Sabores de la tradición italiana
             </h2>
             <p className="text-[#5C4033] max-w-2xl mx-auto">
-              Cada plato cuenta una historia. Ingredientes frescos, recetas centenarias y el amor 
-              por la buena cocina.
+              Cada plato cuenta una historia. Haz clic en cualquier plato para ver sus ingredientes y alérgenos.
             </p>
           </div>
 
@@ -301,18 +471,31 @@ const DemoTrattoria = () => {
                 </h3>
                 <div className="grid md:grid-cols-2 gap-4">
                   {category.items.map((item, itemIndex) => (
-                    <div 
+                    <button 
                       key={itemIndex}
-                      className="flex justify-between items-start p-4 rounded-lg bg-white shadow-sm hover:shadow-md transition-shadow border border-[#E8DED4]"
+                      onClick={() => setSelectedItem(item)}
+                      className="flex gap-4 p-4 rounded-lg bg-white shadow-sm hover:shadow-lg transition-all border border-[#E8DED4] hover:border-[#D4A574] text-left group cursor-pointer"
                     >
-                      <div className="flex-1 pr-4">
-                        <h4 className="font-semibold text-[#2C1810] mb-1">{item.name}</h4>
-                        <p className="text-sm text-[#5C4033]/80">{item.description}</p>
+                      <div className="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
+                        <img 
+                          src={item.image} 
+                          alt={item.name}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        />
                       </div>
-                      <span className="font-serif text-lg font-bold text-[#D4A574] whitespace-nowrap">
-                        {item.price}
-                      </span>
-                    </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex justify-between items-start gap-2">
+                          <h4 className="font-semibold text-[#2C1810] mb-1 group-hover:text-[#D4A574] transition-colors">{item.name}</h4>
+                          <span className="font-serif text-lg font-bold text-[#D4A574] whitespace-nowrap">
+                            {item.price}
+                          </span>
+                        </div>
+                        <p className="text-sm text-[#5C4033]/80 line-clamp-2">{item.description}</p>
+                        <p className="text-xs text-[#D4A574] mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                          Clic para ver ingredientes y alérgenos
+                        </p>
+                      </div>
+                    </button>
                   ))}
                 </div>
               </div>
@@ -320,6 +503,64 @@ const DemoTrattoria = () => {
           </div>
         </div>
       </section>
+
+      {/* Item Detail Dialog */}
+      <Dialog open={!!selectedItem} onOpenChange={() => setSelectedItem(null)}>
+        <DialogContent className="max-w-lg bg-[#FDF8F3]">
+          {selectedItem && (
+            <>
+              <div className="aspect-video rounded-lg overflow-hidden -mx-6 -mt-6 mb-4">
+                <img 
+                  src={selectedItem.image} 
+                  alt={selectedItem.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <DialogHeader>
+                <DialogTitle className="font-serif text-2xl text-[#2C1810] flex justify-between items-start">
+                  {selectedItem.name}
+                  <span className="text-[#D4A574]">{selectedItem.price}</span>
+                </DialogTitle>
+              </DialogHeader>
+              <p className="text-[#5C4033] mb-4">{selectedItem.description}</p>
+              
+              <div className="space-y-4">
+                <div>
+                  <h4 className="font-semibold text-[#2C1810] mb-2 flex items-center gap-2">
+                    <UtensilsCrossed className="w-4 h-4 text-[#D4A574]" />
+                    Ingredientes
+                  </h4>
+                  <ul className="text-sm text-[#5C4033] space-y-1">
+                    {selectedItem.ingredients.map((ing, i) => (
+                      <li key={i} className="flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#D4A574]" />
+                        {ing}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                
+                <div>
+                  <h4 className="font-semibold text-[#2C1810] mb-2 flex items-center gap-2">
+                    <AlertTriangle className="w-4 h-4 text-amber-600" />
+                    Alérgenos
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedItem.allergens.map((allergen, i) => (
+                      <span 
+                        key={i} 
+                        className={`px-3 py-1 rounded-full text-xs font-medium ${allergenColors[allergen] || 'bg-gray-100 text-gray-800'}`}
+                      >
+                        {allergen}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
 
       {/* Special Menus */}
       <section id="menus" className="py-16 bg-[#E8DED4]">
@@ -360,44 +601,6 @@ const DemoTrattoria = () => {
         </div>
       </section>
 
-      {/* Gallery */}
-      <section className="py-16 md:py-24">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <p className="text-[#D4A574] font-medium tracking-widest uppercase mb-4 text-sm">
-              Galería
-            </p>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#2C1810]">
-              Un vistazo a nuestra cocina
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              "https://images.unsplash.com/photo-1595295333158-4742f28fbd85?w=400&q=80",
-              "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=400&q=80",
-              "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&q=80",
-              "https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=400&q=80",
-              "https://images.unsplash.com/photo-1579684947550-22e945225d9a?w=400&q=80",
-              "https://images.unsplash.com/photo-1608897013039-887f21d8c804?w=400&q=80",
-              "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&q=80",
-              "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&q=80",
-            ].map((src, index) => (
-              <div 
-                key={index}
-                className="aspect-square overflow-hidden rounded-xl"
-              >
-                <img
-                  src={src}
-                  alt={`Galería ${index + 1}`}
-                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* CTA Section */}
       <section id="reservas" className="py-16 bg-[#2C1810]">
         <div className="container mx-auto px-4 text-center">
@@ -423,37 +626,45 @@ const DemoTrattoria = () => {
       {/* Contact & Location */}
       <section id="contacto" className="py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12">
-            <div>
+          <div className="grid md:grid-cols-2 gap-12 items-start">
+            <div id="horarios">
               <p className="text-[#D4A574] font-medium tracking-widest uppercase mb-4 text-sm">
                 Encuéntranos
               </p>
-              <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#2C1810] mb-8">
-                Ven a visitarnos
+              <h2 className="font-serif text-3xl font-bold text-[#2C1810] mb-6">
+                Horario y ubicación
               </h2>
-
+              
               <div className="space-y-6">
-                <div id="ubicacion" className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-[#D4A574]/20 flex items-center justify-center flex-shrink-0">
-                    <MapPin className="h-6 w-6 text-[#D4A574]" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-[#2C1810] mb-1">Dirección</h3>
-                    <p className="text-[#5C4033]">Calle Literato Azorín, 15<br />46006 Valencia (Ruzafa)</p>
-                  </div>
-                </div>
-
-                <div id="horarios" className="flex items-start gap-4">
+                <div className="flex items-start gap-4">
                   <div className="w-12 h-12 rounded-full bg-[#D4A574]/20 flex items-center justify-center flex-shrink-0">
                     <Clock className="h-6 w-6 text-[#D4A574]" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-[#2C1810] mb-1">Horario</h3>
-                    <p className="text-[#5C4033]">
-                      Mar - Sáb: 13:00 - 16:00 / 20:00 - 23:30<br />
-                      Domingo: 13:00 - 16:00<br />
-                      Lunes: Cerrado
-                    </p>
+                    <h4 className="font-semibold text-[#2C1810] mb-2">Horario</h4>
+                    <p className="text-[#5C4033]">Martes a Domingo</p>
+                    <p className="text-[#5C4033]">13:30 - 16:00 y 20:30 - 23:30</p>
+                    <p className="text-[#5C4033]/60 text-sm mt-1">Lunes cerrado</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4" id="ubicacion">
+                  <div className="w-12 h-12 rounded-full bg-[#D4A574]/20 flex items-center justify-center flex-shrink-0">
+                    <MapPin className="h-6 w-6 text-[#D4A574]" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-[#2C1810] mb-2">Dirección</h4>
+                    <p className="text-[#5C4033]">Calle Literato Azorín, 42</p>
+                    <p className="text-[#5C4033]">46006 Valencia (Ruzafa)</p>
+                    <a 
+                      href="https://maps.google.com" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-[#D4A574] text-sm hover:underline inline-flex items-center gap-1 mt-1"
+                    >
+                      <Navigation className="h-4 w-4" />
+                      Cómo llegar
+                    </a>
                   </div>
                 </div>
 
@@ -462,10 +673,13 @@ const DemoTrattoria = () => {
                     <Phone className="h-6 w-6 text-[#D4A574]" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-[#2C1810] mb-1">Teléfono</h3>
-                    <a href="tel:+34960000000" className="text-[#D4A574] hover:underline">
-                      960 00 00 00
+                    <h4 className="font-semibold text-[#2C1810] mb-2">Reservas</h4>
+                    <a href="tel:+34960000000" className="text-[#5C4033] hover:text-[#D4A574] transition-colors">
+                      +34 960 000 000
                     </a>
+                    <p className="text-[#5C4033]/60 text-sm mt-1">
+                      O reserva fácilmente por WhatsApp
+                    </p>
                   </div>
                 </div>
 
@@ -474,29 +688,29 @@ const DemoTrattoria = () => {
                     <Mail className="h-6 w-6 text-[#D4A574]" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-[#2C1810] mb-1">Email</h3>
-                    <a href="mailto:hola@trattoriasanluca.es" className="text-[#D4A574] hover:underline">
-                      hola@trattoriasanluca.es
+                    <h4 className="font-semibold text-[#2C1810] mb-2">Email</h4>
+                    <a href="mailto:info@trattoriasanluca.es" className="text-[#5C4033] hover:text-[#D4A574] transition-colors">
+                      info@trattoriasanluca.es
                     </a>
                   </div>
                 </div>
-              </div>
 
-              <div className="mt-8 flex gap-4">
-                <a
-                  href="https://instagram.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-12 h-12 rounded-full bg-[#2C1810] flex items-center justify-center hover:bg-[#D4A574] transition-colors group"
-                >
-                  <Instagram className="h-5 w-5 text-[#F5E6D3] group-hover:text-[#2C1810]" />
-                </a>
+                <div className="flex items-center gap-4 pt-4">
+                  <a 
+                    href="https://instagram.com" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-full bg-[#D4A574] text-[#2C1810] flex items-center justify-center hover:bg-[#C49460] transition-colors"
+                  >
+                    <Instagram className="h-5 w-5" />
+                  </a>
+                </div>
               </div>
             </div>
 
-            <div className="rounded-2xl overflow-hidden shadow-xl h-[400px]">
+            <div className="rounded-2xl overflow-hidden shadow-lg h-[400px]">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3079.8!2d-0.37!3d39.46!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMznCsDI3JzM2LjAiTiAwwrAyMicxMi4wIlc!5e0!3m2!1ses!2ses!4v1600000000000!5m2!1ses!2ses"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3080.0!2d-0.37!3d39.46!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMznCsDI3JzM2LjAiTiAwwrAyMicxMi4wIlc!5e0!3m2!1ses!2ses!4v1234567890"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
@@ -511,21 +725,39 @@ const DemoTrattoria = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#2C1810] py-8 border-t border-[#3D2317]">
+      <footer className="bg-[#2C1810] text-[#F5E6D3] py-12">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="flex items-center gap-2">
-              <span className="font-serif text-xl font-bold text-[#F5E6D3]">Trattoria San Luca</span>
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+            <div className="text-center md:text-left">
+              <h3 className="font-serif text-2xl font-bold mb-2">Trattoria San Luca</h3>
+              <p className="text-[#F5E6D3]/60 text-sm">
+                La auténtica cocina italiana en Valencia
+              </p>
             </div>
-            <p className="text-[#F5E6D3]/60 text-sm text-center">
-              © 2024 Trattoria San Luca. Diseño web por{" "}
-              <Link to="/" className="text-[#D4A574] hover:underline">
-                Valencia Web Studio
-              </Link>
-            </p>
+            
+            <div className="text-center text-sm text-[#F5E6D3]/60">
+              <p>© 2024 Trattoria San Luca. Todos los derechos reservados.</p>
+              <p className="mt-1">
+                Web diseñada por{" "}
+                <Link to="/" className="text-[#D4A574] hover:underline">
+                  Valencia Web Studio
+                </Link>
+              </p>
+            </div>
           </div>
         </div>
       </footer>
+
+      {/* Floating WhatsApp Button */}
+      <a
+        href={whatsappLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 z-50 bg-[#25D366] hover:bg-[#20BA5C] text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-110 flex items-center justify-center"
+        aria-label="Contactar por WhatsApp"
+      >
+        <MessageCircle className="w-7 h-7" />
+      </a>
     </div>
   );
 };
