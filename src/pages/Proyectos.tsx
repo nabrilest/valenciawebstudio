@@ -3,6 +3,7 @@ import { ExternalLink, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
 import projectPeluqueria from "@/assets/project-peluqueria.jpg";
+import projectTrattoria from "@/assets/project-trattoria.jpg";
 
 const Proyectos = () => {
   const projects = [
@@ -14,11 +15,11 @@ const Proyectos = () => {
       status: "available",
     },
     {
-      title: "Próximamente",
-      description: "Estamos preparando nuevas demos para distintos tipos de negocios locales.",
-      image: null,
-      demoUrl: null,
-      status: "coming",
+      title: "Trattoria San Luca",
+      description: "Demo de una web para un restaurante italiano en Ruzafa. Diseño cálido y elegante con carta, menús, galería y sistema de reservas por WhatsApp.",
+      image: projectTrattoria,
+      demoUrl: "/demo/trattoria",
+      status: "available",
     },
     {
       title: "Próximamente",
