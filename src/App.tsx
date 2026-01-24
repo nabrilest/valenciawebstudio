@@ -13,7 +13,14 @@ import AvisoLegal from "./pages/AvisoLegal";
 import PoliticaPrivacidad from "./pages/PoliticaPrivacidad";
 import PoliticaCookies from "./pages/PoliticaCookies";
 import DemoPeluqueria from "./pages/DemoPeluqueria";
-import DemoTrattoria from "./pages/DemoTrattoria";
+import {
+  TrattoriaLayout,
+  TrattoriaHome,
+  TratториаCarta,
+  TrattoriaMenus,
+  TratториаNosotros,
+  TrattoriaContacto
+} from "./pages/trattoria";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,7 +42,16 @@ const App = () => (
             <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />
             <Route path="/politica-cookies" element={<PoliticaCookies />} />
             <Route path="/demo/peluqueria" element={<DemoPeluqueria />} />
-            <Route path="/demo/trattoria" element={<DemoTrattoria />} />
+            
+            {/* Trattoria Demo - Nested Routes */}
+            <Route path="/demo/trattoria" element={<TrattoriaLayout />}>
+              <Route index element={<TrattoriaHome />} />
+              <Route path="carta" element={<TratториаCarta />} />
+              <Route path="menus" element={<TrattoriaMenus />} />
+              <Route path="nosotros" element={<TratториаNosotros />} />
+              <Route path="contacto" element={<TrattoriaContacto />} />
+            </Route>
+            
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
