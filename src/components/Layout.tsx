@@ -20,6 +20,7 @@ const Layout = ({ children, title, description }: LayoutProps) => {
         <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="es_ES" />
+        <meta property="og:site_name" content="Valencia Web Studio" />
         <link rel="canonical" href="https://valenciawebstudio.es" />
       </Helmet>
       <div className="flex flex-col min-h-screen">
