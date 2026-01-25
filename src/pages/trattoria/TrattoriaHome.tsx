@@ -10,6 +10,7 @@ import {
   MapPin
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const whatsappNumber = "34679910422";
 const whatsappLink = `https://wa.me/${whatsappNumber}?text=Hola,%20me%20gustaría%20hacer%20una%20reserva%20en%20Trattoria%20San%20Luca`;
@@ -22,6 +23,33 @@ const quickLinks = [
   { icon: MapPin, label: "Ubicación", path: "/demo/trattoria/contacto" },
   { icon: Phone, label: "Contacto", path: "/demo/trattoria/contacto" },
 ];
+
+// Animated section wrapper component
+const AnimatedSection = ({ 
+  children, 
+  className = "",
+  delay = 0 
+}: { 
+  children: React.ReactNode; 
+  className?: string;
+  delay?: number;
+}) => {
+  const { ref, isVisible } = useScrollAnimation({ threshold: 0.1 });
+  
+  return (
+    <div
+      ref={ref}
+      className={`transition-all duration-700 ease-out ${className}`}
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? "translateY(0)" : "translateY(30px)",
+        transitionDelay: `${delay}ms`
+      }}
+    >
+      {children}
+    </div>
+  );
+};
 
 const TrattoriaHome = () => {
   return (
@@ -125,20 +153,19 @@ const TrattoriaHome = () => {
                 description: "Reserva tu mesa en segundos por WhatsApp y te confirmamos al instante."
               }
             ].map((feature, index) => (
-              <div 
-                key={index}
-                className="text-center p-8 rounded-2xl bg-white shadow-lg border border-[#E8DED4]"
-              >
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#D4A574]/20 mb-6">
-                  <feature.icon className="h-8 w-8 text-[#D4A574]" />
+              <AnimatedSection key={index} delay={index * 150}>
+                <div className="text-center p-8 rounded-2xl bg-white shadow-lg border border-[#E8DED4] h-full hover:shadow-xl transition-shadow">
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#D4A574]/20 mb-6">
+                    <feature.icon className="h-8 w-8 text-[#D4A574]" />
+                  </div>
+                  <h3 className="font-serif text-xl font-bold text-[#2C1810] mb-3">
+                    {feature.title}
+                  </h3>
+                  <p className="text-[#5C4033]/70">
+                    {feature.description}
+                  </p>
                 </div>
-                <h3 className="font-serif text-xl font-bold text-[#2C1810] mb-3">
-                  {feature.title}
-                </h3>
-                <p className="text-[#5C4033]/70">
-                  {feature.description}
-                </p>
-              </div>
+              </AnimatedSection>
             ))}
           </div>
         </div>
@@ -147,115 +174,123 @@ const TrattoriaHome = () => {
       {/* Sections Preview */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
+          <AnimatedSection className="text-center mb-12">
             <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#2C1810] mb-4">
               Explora nuestro restaurante
             </h2>
             <p className="text-[#5C4033]/70 max-w-2xl mx-auto">
               Descubre todo lo que Trattoria San Luca tiene para ofrecerte
             </p>
-          </div>
+          </AnimatedSection>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Carta */}
-            <Link 
-              to="/demo/trattoria/carta"
-              className="group relative overflow-hidden rounded-2xl aspect-[4/5] shadow-lg"
-            >
-              <img 
-                src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=600&q=80" 
-                alt="Nuestra Carta"
-                className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#2C1810]/90 via-[#2C1810]/30 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6">
-                <div className="flex items-center gap-2 text-[#D4A574] mb-2">
-                  <BookOpen className="w-5 h-5" />
-                  <span className="text-sm font-medium uppercase tracking-wider">Carta</span>
+            <AnimatedSection delay={0}>
+              <Link 
+                to="/demo/trattoria/carta"
+                className="group relative overflow-hidden rounded-2xl aspect-[4/5] shadow-lg block"
+              >
+                <img 
+                  src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=600&q=80" 
+                  alt="Nuestra Carta"
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#2C1810]/90 via-[#2C1810]/30 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-6">
+                  <div className="flex items-center gap-2 text-[#D4A574] mb-2">
+                    <BookOpen className="w-5 h-5" />
+                    <span className="text-sm font-medium uppercase tracking-wider">Carta</span>
+                  </div>
+                  <h3 className="font-serif text-xl font-bold text-[#F5E6D3] mb-2">
+                    Nuestra Carta
+                  </h3>
+                  <p className="text-[#F5E6D3]/80 text-sm">
+                    Antipasti, pasta fresca, pizzas y mucho más
+                  </p>
                 </div>
-                <h3 className="font-serif text-xl font-bold text-[#F5E6D3] mb-2">
-                  Nuestra Carta
-                </h3>
-                <p className="text-[#F5E6D3]/80 text-sm">
-                  Antipasti, pasta fresca, pizzas y mucho más
-                </p>
-              </div>
-            </Link>
+              </Link>
+            </AnimatedSection>
 
             {/* Menús */}
-            <Link 
-              to="/demo/trattoria/menus"
-              className="group relative overflow-hidden rounded-2xl aspect-[4/5] shadow-lg"
-            >
-              <img 
-                src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" 
-                alt="Menús Especiales"
-                className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#2C1810]/90 via-[#2C1810]/30 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6">
-                <div className="flex items-center gap-2 text-[#D4A574] mb-2">
-                  <UtensilsCrossed className="w-5 h-5" />
-                  <span className="text-sm font-medium uppercase tracking-wider">Menús</span>
+            <AnimatedSection delay={100}>
+              <Link 
+                to="/demo/trattoria/menus"
+                className="group relative overflow-hidden rounded-2xl aspect-[4/5] shadow-lg block"
+              >
+                <img 
+                  src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" 
+                  alt="Menús Especiales"
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#2C1810]/90 via-[#2C1810]/30 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-6">
+                  <div className="flex items-center gap-2 text-[#D4A574] mb-2">
+                    <UtensilsCrossed className="w-5 h-5" />
+                    <span className="text-sm font-medium uppercase tracking-wider">Menús</span>
+                  </div>
+                  <h3 className="font-serif text-xl font-bold text-[#F5E6D3] mb-2">
+                    Menús Especiales
+                  </h3>
+                  <p className="text-[#F5E6D3]/80 text-sm">
+                    Del día, degustación y para grupos
+                  </p>
                 </div>
-                <h3 className="font-serif text-xl font-bold text-[#F5E6D3] mb-2">
-                  Menús Especiales
-                </h3>
-                <p className="text-[#F5E6D3]/80 text-sm">
-                  Del día, degustación y para grupos
-                </p>
-              </div>
-            </Link>
+              </Link>
+            </AnimatedSection>
 
             {/* Nosotros */}
-            <Link 
-              to="/demo/trattoria/nosotros"
-              className="group relative overflow-hidden rounded-2xl aspect-[4/5] shadow-lg"
-            >
-              <img 
-                src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=600&q=80" 
-                alt="Sobre Nosotros"
-                className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#2C1810]/90 via-[#2C1810]/30 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6">
-                <div className="flex items-center gap-2 text-[#D4A574] mb-2">
-                  <Users className="w-5 h-5" />
-                  <span className="text-sm font-medium uppercase tracking-wider">Nosotros</span>
+            <AnimatedSection delay={200}>
+              <Link 
+                to="/demo/trattoria/nosotros"
+                className="group relative overflow-hidden rounded-2xl aspect-[4/5] shadow-lg block"
+              >
+                <img 
+                  src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=600&q=80" 
+                  alt="Sobre Nosotros"
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#2C1810]/90 via-[#2C1810]/30 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-6">
+                  <div className="flex items-center gap-2 text-[#D4A574] mb-2">
+                    <Users className="w-5 h-5" />
+                    <span className="text-sm font-medium uppercase tracking-wider">Nosotros</span>
+                  </div>
+                  <h3 className="font-serif text-xl font-bold text-[#F5E6D3] mb-2">
+                    Nuestra Historia
+                  </h3>
+                  <p className="text-[#F5E6D3]/80 text-sm">
+                    Tradición italiana en el corazón de Valencia
+                  </p>
                 </div>
-                <h3 className="font-serif text-xl font-bold text-[#F5E6D3] mb-2">
-                  Nuestra Historia
-                </h3>
-                <p className="text-[#F5E6D3]/80 text-sm">
-                  Tradición italiana en el corazón de Valencia
-                </p>
-              </div>
-            </Link>
+              </Link>
+            </AnimatedSection>
 
             {/* Contacto */}
-            <Link 
-              to="/demo/trattoria/contacto"
-              className="group relative overflow-hidden rounded-2xl aspect-[4/5] shadow-lg"
-            >
-              <img 
-                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80" 
-                alt="Contacto"
-                className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#2C1810]/90 via-[#2C1810]/30 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6">
-                <div className="flex items-center gap-2 text-[#D4A574] mb-2">
-                  <MapPin className="w-5 h-5" />
-                  <span className="text-sm font-medium uppercase tracking-wider">Contacto</span>
+            <AnimatedSection delay={300}>
+              <Link 
+                to="/demo/trattoria/contacto"
+                className="group relative overflow-hidden rounded-2xl aspect-[4/5] shadow-lg block"
+              >
+                <img 
+                  src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80" 
+                  alt="Contacto"
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#2C1810]/90 via-[#2C1810]/30 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-6">
+                  <div className="flex items-center gap-2 text-[#D4A574] mb-2">
+                    <MapPin className="w-5 h-5" />
+                    <span className="text-sm font-medium uppercase tracking-wider">Contacto</span>
+                  </div>
+                  <h3 className="font-serif text-xl font-bold text-[#F5E6D3] mb-2">
+                    Encuéntranos
+                  </h3>
+                  <p className="text-[#F5E6D3]/80 text-sm">
+                    Horarios, ubicación y reservas
+                  </p>
                 </div>
-                <h3 className="font-serif text-xl font-bold text-[#F5E6D3] mb-2">
-                  Encuéntranos
-                </h3>
-                <p className="text-[#F5E6D3]/80 text-sm">
-                  Horarios, ubicación y reservas
-                </p>
-              </div>
-            </Link>
+              </Link>
+            </AnimatedSection>
           </div>
         </div>
       </section>
