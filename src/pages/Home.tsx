@@ -1,8 +1,67 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Check, Globe, Palette, Users, FileText, MessageCircle } from "lucide-react";
+import { ArrowRight, Check, Globe, Palette, Users, FileText, MessageCircle, Briefcase, FolderOpen, Heart, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import heroBg from "@/assets/hero-bg.jpg";
+
+// Animated section wrapper component
+const AnimatedSection = ({ 
+  children, 
+  className = "",
+  delay = 0 
+}: { 
+  children: React.ReactNode; 
+  className?: string;
+  delay?: number;
+}) => {
+  const { ref, isVisible } = useScrollAnimation({ threshold: 0.1 });
+  
+  return (
+    <div
+      ref={ref}
+      className={`transition-all duration-700 ease-out ${className}`}
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? "translateY(0)" : "translateY(30px)",
+        transitionDelay: `${delay}ms`
+      }}
+    >
+      {children}
+    </div>
+  );
+};
+
+const quickNavItems = [
+  {
+    icon: Briefcase,
+    title: "Servicios",
+    description: "Diseño web, mantenimiento y más",
+    path: "/servicios",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80"
+  },
+  {
+    icon: FolderOpen,
+    title: "Proyectos",
+    description: "Ejemplos de webs que hemos hecho",
+    path: "/proyectos",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80"
+  },
+  {
+    icon: Heart,
+    title: "Sobre Nosotros",
+    description: "Quiénes somos y cómo trabajamos",
+    path: "/sobre-nosotros",
+    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&q=80"
+  },
+  {
+    icon: Phone,
+    title: "Contacto",
+    description: "Cuéntanos tu idea sin compromiso",
+    path: "/contacto",
+    image: "https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=600&q=80"
+  },
+];
 
 const Home = () => {
   const benefits = [
@@ -53,38 +112,82 @@ const Home = () => {
         </div>
       </section>
 
-      {/* About Section */}
+      {/* Quick Navigation Section */}
       <section className="py-10 md:py-14">
         <div className="container">
-          <div className="max-w-3xl mx-auto text-center animate-fade-in">
+          <AnimatedSection className="text-center mb-8">
+            <h2 className="font-display text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-3">
+              Explora lo que hacemos
+            </h2>
+            <p className="font-body text-lg text-muted-foreground">
+              Todo lo que necesitas saber sobre Valencia Web Studio
+            </p>
+          </AnimatedSection>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5 max-w-6xl mx-auto">
+            {quickNavItems.map((item, index) => (
+              <AnimatedSection key={item.path} delay={index * 100}>
+                <Link 
+                  to={item.path}
+                  className="group relative overflow-hidden rounded-2xl aspect-[4/5] shadow-lg block hover:shadow-xl transition-shadow"
+                >
+                  <img 
+                    src={item.image} 
+                    alt={item.title}
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-5">
+                    <div className="flex items-center gap-2 text-secondary mb-2">
+                      <item.icon className="w-5 h-5" />
+                      <span className="text-sm font-medium uppercase tracking-wider">{item.title}</span>
+                    </div>
+                    <h3 className="font-display text-xl font-bold text-primary-foreground mb-1">
+                      {item.title}
+                    </h3>
+                    <p className="text-primary-foreground/80 text-sm">
+                      {item.description}
+                    </p>
+                  </div>
+                </Link>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section className="py-10 md:py-14 section-alt">
+        <div className="container">
+          <AnimatedSection className="max-w-3xl mx-auto text-center">
             <h2 className="font-display text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4">
               Tu web, pero hecha con cariño
             </h2>
             <p className="font-body text-lg text-muted-foreground leading-relaxed">
               Nada de plantillas genéricas ni diseños que parecen sacados de una fábrica. Cada web la pensamos desde cero para que represente tu negocio de verdad y conecte con tus clientes.
             </p>
-          </div>
+          </AnimatedSection>
         </div>
       </section>
 
       {/* Benefits Section */}
-      <section className="section-alt py-10 md:py-14">
+      <section className="py-10 md:py-14">
         <div className="container">
-          <h2 className="font-display text-2xl md:text-3xl lg:text-4xl font-bold text-foreground text-center mb-8">
-            ¿Por qué currar con nosotros?
-          </h2>
+          <AnimatedSection className="text-center mb-8">
+            <h2 className="font-display text-2xl md:text-3xl lg:text-4xl font-bold text-foreground">
+              ¿Por qué currar con nosotros?
+            </h2>
+          </AnimatedSection>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
             {benefits.map((benefit, index) => (
-              <div
-                key={index}
-                className="bg-card rounded-lg p-5 shadow-sm border border-border hover:shadow-md hover:border-secondary/30 transition-all animate-slide-up"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <div className="w-11 h-11 rounded-full bg-accent flex items-center justify-center mb-3">
-                  <benefit.icon className="w-5 h-5 text-accent-foreground" />
+              <AnimatedSection key={index} delay={index * 100}>
+                <div className="bg-card rounded-lg p-5 shadow-sm border border-border hover:shadow-md hover:border-secondary/30 transition-all h-full">
+                  <div className="w-11 h-11 rounded-full bg-accent flex items-center justify-center mb-3">
+                    <benefit.icon className="w-5 h-5 text-accent-foreground" />
+                  </div>
+                  <p className="font-body text-foreground font-medium">{benefit.text}</p>
                 </div>
-                <p className="font-body text-foreground font-medium">{benefit.text}</p>
-              </div>
+              </AnimatedSection>
             ))}
           </div>
         </div>

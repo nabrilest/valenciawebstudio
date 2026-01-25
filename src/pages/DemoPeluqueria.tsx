@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Phone, Clock, MapPin, Scissors, Heart, Instagram, MessageCircle, Star, Users, Sparkles, Menu, Home, Image, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import logo from "@/assets/logo.png";
 import heroImage from "@/assets/lumina-hero.jpg";
 import gallery1 from "@/assets/gallery-1.jpg";
@@ -15,9 +16,41 @@ import gallery6 from "@/assets/gallery-6.jpg";
 import gallery7 from "@/assets/gallery-7.jpg";
 import gallery8 from "@/assets/gallery-8.jpg";
 
+// Animated section wrapper component
+const AnimatedSection = ({ 
+  children, 
+  className = "",
+  delay = 0 
+}: { 
+  children: React.ReactNode; 
+  className?: string;
+  delay?: number;
+}) => {
+  const { ref, isVisible } = useScrollAnimation({ threshold: 0.1 });
+  
+  return (
+    <div
+      ref={ref}
+      className={`transition-all duration-700 ease-out ${className}`}
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? "translateY(0)" : "translateY(30px)",
+        transitionDelay: `${delay}ms`
+      }}
+    >
+      {children}
+    </div>
+  );
+};
+
 const DemoPeluqueria = () => {
   const [selectedImage, setSelectedImage] = useState<{ src: string; alt: string } | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // Scroll to top on mount
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const services = [
     { name: "Corte mujer", price: "desde 18€", description: "Corte personalizado con lavado y secado" },
@@ -231,7 +264,7 @@ const DemoPeluqueria = () => {
       {/* Quiénes Somos */}
       <section id="nosotras" className="py-16 md:py-24" style={{ backgroundColor: "#F7F3E9" }}>
         <div className="container">
-          <div className="max-w-3xl mx-auto text-center">
+          <AnimatedSection className="max-w-3xl mx-auto text-center">
             <p className="font-body text-sm uppercase tracking-widest mb-3" style={{ color: "#8B9D83" }}>Nuestra historia</p>
             <h2 className="font-display text-3xl md:text-4xl font-bold mb-6" style={{ color: "#5D4E42" }}>
               Dos amigas, un sueño
@@ -247,29 +280,32 @@ const DemoPeluqueria = () => {
                 Trabajamos solo con cita para poder dedicarte el tiempo que mereces. Y si llegas un poco tarde porque había cola en la frutería, no pasa nada. Lo entendemos.
               </p>
             </div>
-          </div>
+          </AnimatedSection>
         </div>
       </section>
 
       {/* Así Trabajamos */}
       <section className="py-16 md:py-20 bg-white">
         <div className="container">
-          <p className="font-body text-sm uppercase tracking-widest text-center mb-3" style={{ color: "#8B9D83" }}>Nuestra filosofía</p>
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-10" style={{ color: "#5D4E42" }}>
-            Así trabajamos
-          </h2>
+          <AnimatedSection className="text-center mb-10">
+            <p className="font-body text-sm uppercase tracking-widest mb-3" style={{ color: "#8B9D83" }}>Nuestra filosofía</p>
+            <h2 className="font-display text-3xl md:text-4xl font-bold" style={{ color: "#5D4E42" }}>
+              Así trabajamos
+            </h2>
+          </AnimatedSection>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 max-w-5xl mx-auto">
             {benefits.map((benefit, index) => (
-              <div 
-                key={index}
-                className="flex flex-col items-center text-center p-5 rounded-xl"
-                style={{ backgroundColor: "#F7F3E9" }}
-              >
-                <div className="w-12 h-12 rounded-full flex items-center justify-center mb-3" style={{ backgroundColor: "#D4A5A5" }}>
-                  <benefit.icon className="w-5 h-5 text-white" />
+              <AnimatedSection key={index} delay={index * 100}>
+                <div 
+                  className="flex flex-col items-center text-center p-5 rounded-xl"
+                  style={{ backgroundColor: "#F7F3E9" }}
+                >
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center mb-3" style={{ backgroundColor: "#D4A5A5" }}>
+                    <benefit.icon className="w-5 h-5 text-white" />
+                  </div>
+                  <span className="font-body text-sm" style={{ color: "#5D4E42" }}>{benefit.text}</span>
                 </div>
-                <span className="font-body text-sm" style={{ color: "#5D4E42" }}>{benefit.text}</span>
-              </div>
+              </AnimatedSection>
             ))}
           </div>
         </div>
@@ -278,32 +314,35 @@ const DemoPeluqueria = () => {
       {/* Servicios y Precios */}
       <section id="servicios" className="py-16 md:py-24" style={{ backgroundColor: "#F7F3E9" }}>
         <div className="container">
-          <p className="font-body text-sm uppercase tracking-widest text-center mb-3" style={{ color: "#8B9D83" }}>Lo que hacemos</p>
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-4" style={{ color: "#5D4E42" }}>
-            Servicios y precios
-          </h2>
-          <p className="font-body text-center mb-10 max-w-xl mx-auto" style={{ color: "#5D4E42", opacity: 0.7 }}>
-            Precios orientativos. Consulta nuestros bonos de 5 servicios con descuento.
-          </p>
+          <AnimatedSection className="text-center mb-10">
+            <p className="font-body text-sm uppercase tracking-widest mb-3" style={{ color: "#8B9D83" }}>Lo que hacemos</p>
+            <h2 className="font-display text-3xl md:text-4xl font-bold mb-4" style={{ color: "#5D4E42" }}>
+              Servicios y precios
+            </h2>
+            <p className="font-body max-w-xl mx-auto" style={{ color: "#5D4E42", opacity: 0.7 }}>
+              Precios orientativos. Consulta nuestros bonos de 5 servicios con descuento.
+            </p>
+          </AnimatedSection>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
             {services.map((service, index) => (
-              <div 
-                key={index}
-                className="bg-white rounded-xl p-5 flex justify-between items-start hover:shadow-md transition-shadow"
-                style={{ borderLeft: "4px solid #8B9D83" }}
-              >
-                <div className="flex-1">
-                  <h3 className="font-display text-lg font-semibold mb-1" style={{ color: "#5D4E42" }}>
-                    {service.name}
-                  </h3>
-                  <p className="font-body text-sm" style={{ color: "#5D4E42", opacity: 0.6 }}>
-                    {service.description}
-                  </p>
+              <AnimatedSection key={index} delay={index * 50}>
+                <div 
+                  className="bg-white rounded-xl p-5 flex justify-between items-start hover:shadow-md transition-shadow"
+                  style={{ borderLeft: "4px solid #8B9D83" }}
+                >
+                  <div className="flex-1">
+                    <h3 className="font-display text-lg font-semibold mb-1" style={{ color: "#5D4E42" }}>
+                      {service.name}
+                    </h3>
+                    <p className="font-body text-sm" style={{ color: "#5D4E42", opacity: 0.6 }}>
+                      {service.description}
+                    </p>
+                  </div>
+                  <span className="font-display text-lg font-bold ml-4" style={{ color: "#8B9D83" }}>
+                    {service.price}
+                  </span>
                 </div>
-                <span className="font-display text-lg font-bold ml-4" style={{ color: "#8B9D83" }}>
-                  {service.price}
-                </span>
-              </div>
+              </AnimatedSection>
             ))}
           </div>
           <div className="text-center mt-8">
@@ -317,33 +356,36 @@ const DemoPeluqueria = () => {
       {/* Galería */}
       <section id="galeria" className="py-16 md:py-24 bg-white">
         <div className="container">
-          <p className="font-body text-sm uppercase tracking-widest text-center mb-3" style={{ color: "#8B9D83" }}>Nuestro trabajo</p>
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-4" style={{ color: "#5D4E42" }}>
-            Galería
-          </h2>
-          <p className="font-body text-center mb-10 max-w-xl mx-auto" style={{ color: "#5D4E42", opacity: 0.7 }}>
-            Haz clic en cualquier imagen para verla en grande. Síguenos en Instagram para ver más.
-          </p>
+          <AnimatedSection className="text-center mb-10">
+            <p className="font-body text-sm uppercase tracking-widest mb-3" style={{ color: "#8B9D83" }}>Nuestro trabajo</p>
+            <h2 className="font-display text-3xl md:text-4xl font-bold mb-4" style={{ color: "#5D4E42" }}>
+              Galería
+            </h2>
+            <p className="font-body max-w-xl mx-auto" style={{ color: "#5D4E42", opacity: 0.7 }}>
+              Haz clic en cualquier imagen para verla en grande. Síguenos en Instagram para ver más.
+            </p>
+          </AnimatedSection>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-5xl mx-auto">
             {gallery.map((item, index) => (
-              <button 
-                key={index}
-                onClick={() => setSelectedImage(item)}
-                className="group relative aspect-square overflow-hidden rounded-xl cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2"
-                style={{ "--tw-ring-color": "#8B9D83" } as React.CSSProperties}
-              >
-                <img 
-                  src={item.src} 
-                  alt={item.alt}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div 
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end"
-                  style={{ background: "linear-gradient(to top, rgba(93, 78, 66, 0.8), transparent)" }}
+              <AnimatedSection key={index} delay={index * 75}>
+                <button 
+                  onClick={() => setSelectedImage(item)}
+                  className="group relative aspect-square overflow-hidden rounded-xl cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 w-full"
+                  style={{ "--tw-ring-color": "#8B9D83" } as React.CSSProperties}
                 >
-                  <p className="font-body text-white text-sm p-4">{item.alt}</p>
-                </div>
-              </button>
+                  <img 
+                    src={item.src} 
+                    alt={item.alt}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div 
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end"
+                    style={{ background: "linear-gradient(to top, rgba(93, 78, 66, 0.8), transparent)" }}
+                  >
+                    <p className="font-body text-white text-sm p-4">{item.alt}</p>
+                  </div>
+                </button>
+              </AnimatedSection>
             ))}
           </div>
           <div className="text-center mt-8">
@@ -385,29 +427,30 @@ const DemoPeluqueria = () => {
       {/* Testimonios */}
       <section id="opiniones" className="py-16 md:py-24" style={{ backgroundColor: "#F7F3E9" }}>
         <div className="container">
-          <p className="font-body text-sm uppercase tracking-widest text-center mb-3" style={{ color: "#8B9D83" }}>Lo que dicen de nosotras</p>
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-10" style={{ color: "#5D4E42" }}>
-            Opiniones del barrio
-          </h2>
+          <AnimatedSection className="text-center mb-10">
+            <p className="font-body text-sm uppercase tracking-widest mb-3" style={{ color: "#8B9D83" }}>Lo que dicen de nosotras</p>
+            <h2 className="font-display text-3xl md:text-4xl font-bold" style={{ color: "#5D4E42" }}>
+              Opiniones del barrio
+            </h2>
+          </AnimatedSection>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {testimonials.map((testimonial, index) => (
-              <div 
-                key={index}
-                className="bg-white rounded-xl p-6 shadow-sm"
-              >
-                <div className="flex gap-1 mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-current" style={{ color: "#D4A5A5" }} />
-                  ))}
+              <AnimatedSection key={index} delay={index * 150}>
+                <div className="bg-white rounded-xl p-6 shadow-sm h-full">
+                  <div className="flex gap-1 mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-current" style={{ color: "#D4A5A5" }} />
+                    ))}
+                  </div>
+                  <p className="font-body mb-4 italic" style={{ color: "#5D4E42" }}>
+                    "{testimonial.text}"
+                  </p>
+                  <div>
+                    <p className="font-display font-semibold" style={{ color: "#5D4E42" }}>{testimonial.name}</p>
+                    <p className="font-body text-sm" style={{ color: "#8B9D83" }}>{testimonial.location}</p>
+                  </div>
                 </div>
-                <p className="font-body mb-4 italic" style={{ color: "#5D4E42" }}>
-                  "{testimonial.text}"
-                </p>
-                <div>
-                  <p className="font-display font-semibold" style={{ color: "#5D4E42" }}>{testimonial.name}</p>
-                  <p className="font-body text-sm" style={{ color: "#8B9D83" }}>{testimonial.location}</p>
-                </div>
-              </div>
+              </AnimatedSection>
             ))}
           </div>
         </div>
