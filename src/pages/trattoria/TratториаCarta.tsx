@@ -78,7 +78,7 @@ const menuCategories: MenuCategory[] = [
         name: "Cacio e Pepe", 
         description: "Tonnarelli con pecorino romano y pimienta negra", 
         price: "14€",
-        image: "https://images.unsplash.com/photo-1673442632805-0c46c228eb04?w=400&q=80",
+        image: "https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=400&q=80",
         ingredients: ["Tonnarelli frescos", "Pecorino Romano DOP", "Pimienta negra en grano"],
         allergens: ["Gluten", "Lácteos", "Huevo"]
       },
