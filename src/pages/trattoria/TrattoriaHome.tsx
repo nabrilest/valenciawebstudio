@@ -144,6 +144,122 @@ const TrattoriaHome = () => {
         </div>
       </section>
 
+      {/* Sections Preview */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#2C1810] mb-4">
+              Explora nuestro restaurante
+            </h2>
+            <p className="text-[#5C4033]/70 max-w-2xl mx-auto">
+              Descubre todo lo que Trattoria San Luca tiene para ofrecerte
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Carta */}
+            <Link 
+              to="/demo/trattoria/carta"
+              className="group relative overflow-hidden rounded-2xl aspect-[4/5] shadow-lg"
+            >
+              <img 
+                src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=600&q=80" 
+                alt="Nuestra Carta"
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#2C1810]/90 via-[#2C1810]/30 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-6">
+                <div className="flex items-center gap-2 text-[#D4A574] mb-2">
+                  <BookOpen className="w-5 h-5" />
+                  <span className="text-sm font-medium uppercase tracking-wider">Carta</span>
+                </div>
+                <h3 className="font-serif text-xl font-bold text-[#F5E6D3] mb-2">
+                  Nuestra Carta
+                </h3>
+                <p className="text-[#F5E6D3]/80 text-sm">
+                  Antipasti, pasta fresca, pizzas y mucho más
+                </p>
+              </div>
+            </Link>
+
+            {/* Menús */}
+            <Link 
+              to="/demo/trattoria/menus"
+              className="group relative overflow-hidden rounded-2xl aspect-[4/5] shadow-lg"
+            >
+              <img 
+                src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" 
+                alt="Menús Especiales"
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#2C1810]/90 via-[#2C1810]/30 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-6">
+                <div className="flex items-center gap-2 text-[#D4A574] mb-2">
+                  <UtensilsCrossed className="w-5 h-5" />
+                  <span className="text-sm font-medium uppercase tracking-wider">Menús</span>
+                </div>
+                <h3 className="font-serif text-xl font-bold text-[#F5E6D3] mb-2">
+                  Menús Especiales
+                </h3>
+                <p className="text-[#F5E6D3]/80 text-sm">
+                  Del día, degustación y para grupos
+                </p>
+              </div>
+            </Link>
+
+            {/* Nosotros */}
+            <Link 
+              to="/demo/trattoria/nosotros"
+              className="group relative overflow-hidden rounded-2xl aspect-[4/5] shadow-lg"
+            >
+              <img 
+                src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=600&q=80" 
+                alt="Sobre Nosotros"
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#2C1810]/90 via-[#2C1810]/30 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-6">
+                <div className="flex items-center gap-2 text-[#D4A574] mb-2">
+                  <Users className="w-5 h-5" />
+                  <span className="text-sm font-medium uppercase tracking-wider">Nosotros</span>
+                </div>
+                <h3 className="font-serif text-xl font-bold text-[#F5E6D3] mb-2">
+                  Nuestra Historia
+                </h3>
+                <p className="text-[#F5E6D3]/80 text-sm">
+                  Tradición italiana en el corazón de Valencia
+                </p>
+              </div>
+            </Link>
+
+            {/* Contacto */}
+            <Link 
+              to="/demo/trattoria/contacto"
+              className="group relative overflow-hidden rounded-2xl aspect-[4/5] shadow-lg"
+            >
+              <img 
+                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80" 
+                alt="Contacto"
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#2C1810]/90 via-[#2C1810]/30 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-6">
+                <div className="flex items-center gap-2 text-[#D4A574] mb-2">
+                  <MapPin className="w-5 h-5" />
+                  <span className="text-sm font-medium uppercase tracking-wider">Contacto</span>
+                </div>
+                <h3 className="font-serif text-xl font-bold text-[#F5E6D3] mb-2">
+                  Encuéntranos
+                </h3>
+                <p className="text-[#F5E6D3]/80 text-sm">
+                  Horarios, ubicación y reservas
+                </p>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-16 bg-[#2C1810]">
         <div className="container mx-auto px-4 text-center">
