@@ -38,28 +38,24 @@ const quickNavItems = [
     title: "Servicios",
     description: "Diseño web, mantenimiento y más",
     path: "/servicios",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80"
   },
   {
     icon: FolderOpen,
     title: "Proyectos",
     description: "Ejemplos de webs que hemos hecho",
     path: "/proyectos",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80"
   },
   {
     icon: Heart,
     title: "Sobre Nosotros",
     description: "Quiénes somos y cómo trabajamos",
     path: "/sobre-nosotros",
-    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&q=80"
   },
   {
     icon: Phone,
     title: "Contacto",
     description: "Cuéntanos tu idea sin compromiso",
     path: "/contacto",
-    image: "https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=600&q=80"
   },
 ];
 
@@ -124,30 +120,26 @@ const Home = () => {
             </p>
           </AnimatedSection>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-5 max-w-4xl mx-auto">
             {quickNavItems.map((item, index) => (
               <AnimatedSection key={item.path} delay={index * 100}>
                 <Link 
                   to={item.path}
-                  className="group relative overflow-hidden rounded-2xl aspect-[4/5] shadow-lg block hover:shadow-xl transition-shadow"
+                  className="group relative overflow-hidden rounded-2xl p-6 shadow-lg block hover:shadow-xl transition-all bg-gradient-to-br from-primary via-primary/90 to-primary/70"
                 >
-                  <img 
-                    src={item.image} 
-                    alt={item.title}
-                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-5">
-                    <div className="flex items-center gap-2 text-secondary mb-2">
-                      <item.icon className="w-5 h-5" />
-                      <span className="text-sm font-medium uppercase tracking-wider">{item.title}</span>
+                  <div className="flex items-center gap-4">
+                    <div className="w-14 h-14 rounded-full bg-secondary/20 flex items-center justify-center shrink-0">
+                      <item.icon className="w-7 h-7 text-secondary" />
                     </div>
-                    <h3 className="font-display text-xl font-bold text-primary-foreground mb-1">
-                      {item.title}
-                    </h3>
-                    <p className="text-primary-foreground/80 text-sm">
-                      {item.description}
-                    </p>
+                    <div className="flex-1">
+                      <h3 className="font-display text-xl font-bold text-primary-foreground mb-1">
+                        {item.title}
+                      </h3>
+                      <p className="text-primary-foreground/80 text-sm">
+                        {item.description}
+                      </p>
+                    </div>
+                    <ArrowRight className="w-5 h-5 text-secondary opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
                 </Link>
               </AnimatedSection>
