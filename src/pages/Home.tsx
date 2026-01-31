@@ -109,6 +109,14 @@ const caseStudies = [
     image: projectTrattoria,
     link: "/demo/trattoria",
   },
+  {
+    title: "Estudio de Tatuajes",
+    result: "Más solicitudes de cita online",
+    description:
+      "Web con galería de trabajos y reserva directa. Estilo industrial y moderno.",
+    image: projectPeluqueria,
+    link: "/demo/tatuajes",
+  },
 ];
 
 const Home = () => {
@@ -349,7 +357,7 @@ const Home = () => {
         <div className="container">
           <AnimatedSection className="text-center mb-10">
             <h2 className="font-display text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-3">
-              Casos reales
+              Ejemplos de proyectos
             </h2>
             <p className="font-body text-lg text-muted-foreground">
               Ejemplos de lo que hacemos para negocios como el tuyo

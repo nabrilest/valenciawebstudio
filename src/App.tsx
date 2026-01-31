@@ -17,6 +17,7 @@ import AvisoLegal from "./pages/AvisoLegal";
 import PoliticaPrivacidad from "./pages/PoliticaPrivacidad";
 import PoliticaCookies from "./pages/PoliticaCookies";
 import DemoPeluqueria from "./pages/DemoPeluqueria";
+import DemoTatuajes from "./pages/DemoTatuajes";
 import {
   TrattoriaLayout,
   TrattoriaHome,
@@ -50,6 +51,7 @@ const App = () => (
             <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />
             <Route path="/politica-cookies" element={<PoliticaCookies />} />
             <Route path="/demo/peluqueria" element={<DemoPeluqueria />} />
+            <Route path="/demo/tatuajes" element={<DemoTatuajes />} />
             
             {/* Trattoria Demo - Nested Routes */}
             <Route path="/demo/trattoria" element={<TrattoriaLayout />}>

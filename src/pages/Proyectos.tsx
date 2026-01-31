@@ -58,6 +58,18 @@ const projects = [
     services: ["Diseño web", "SEO local", "Sistema reservas"],
   },
   {
+    title: "Estudio de Tatuajes",
+    description:
+      "Web con estilo industrial para un estudio de tatuajes. Galería de trabajos, estilos y reserva de citas.",
+    image: projectPeluqueria,
+    demoUrl: "/demo/tatuajes",
+    metrics: [
+      { icon: Phone, text: "+35% solicitudes de cita" },
+      { icon: TrendingUp, text: "Top 5 en Google Maps" },
+    ],
+    services: ["Diseño web", "SEO local", "Galería interactiva"],
+  },
+  {
     title: "Clínica Dental Ruzafa",
     description:
       "Clínica dental con web orientada a conversión. Formulario de cita previa y galería de tratamientos.",
