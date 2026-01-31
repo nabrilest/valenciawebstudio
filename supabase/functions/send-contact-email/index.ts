@@ -16,6 +16,11 @@ function isValidOrigin(origin: string): boolean {
     return true;
   }
   
+  // Allow production domain
+  if (origin === 'https://valenciawebstudio.es' || origin === 'https://www.valenciawebstudio.es') {
+    return true;
+  }
+  
   return false;
 }
 
@@ -61,6 +66,9 @@ interface ContactEmailRequest {
   name: string;
   email: string;
   message: string;
+  business?: string;
+  phone?: string;
+  neighborhood?: string;
 }
 
 Deno.serve(async (req: Request): Promise<Response> => {
@@ -109,7 +117,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { name, email, message }: ContactEmailRequest = await req.json();
+    const { name, email, message, business, phone, neighborhood }: ContactEmailRequest = await req.json();
     
     console.log("Received contact form submission");
 
@@ -166,21 +174,37 @@ Deno.serve(async (req: Request): Promise<Response> => {
     const safeName = escapeHtml(name.trim());
     const safeEmail = escapeHtml(email.trim());
     const safeMessage = escapeHtml(message.trim());
+    const safeBusiness = business ? escapeHtml(business.trim()) : "";
+    const safePhone = phone ? escapeHtml(phone.trim()) : "";
+    const safeNeighborhood = neighborhood ? escapeHtml(neighborhood.trim()) : "";
+
+    // Build optional fields HTML
+    const optionalFields = [];
+    if (safeBusiness) {
+      optionalFields.push(`<p style="margin: 0 0 10px 0;"><strong>Negocio:</strong> ${safeBusiness}</p>`);
+    }
+    if (safePhone) {
+      optionalFields.push(`<p style="margin: 0 0 10px 0;"><strong>Teléfono:</strong> ${safePhone}</p>`);
+    }
+    if (safeNeighborhood) {
+      optionalFields.push(`<p style="margin: 0 0 10px 0;"><strong>Barrio/Ciudad:</strong> ${safeNeighborhood}</p>`);
+    }
 
     const emailResponse = await resend.emails.send({
       from: "Valencia Web Studio <onboarding@resend.dev>",
       to: ["hola@valenciawebstudio.es"],
       reply_to: email,
-      subject: `Nuevo mensaje de contacto - ${safeName}`,
+      subject: `Nueva solicitud de auditoría - ${safeName}${safeBusiness ? ` (${safeBusiness})` : ""}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <h2 style="color: #1e3a5f; border-bottom: 2px solid #ff9500; padding-bottom: 10px;">
-            Nuevo mensaje de contacto
+            Nueva solicitud de auditoría gratuita
           </h2>
           
           <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
             <p style="margin: 0 0 10px 0;"><strong>Nombre:</strong> ${safeName}</p>
             <p style="margin: 0 0 10px 0;"><strong>Email:</strong> ${safeEmail}</p>
+            ${optionalFields.join("")}
           </div>
           
           <div style="background-color: #fff; border-left: 4px solid #ff9500; padding: 15px; margin: 20px 0;">
@@ -189,7 +213,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
           </div>
           
           <p style="color: #666; font-size: 12px; margin-top: 30px; text-align: center;">
-            Este mensaje fue enviado desde el formulario de contacto de valenciawebstudio.es
+            Este mensaje fue enviado desde el formulario de auditoría de valenciawebstudio.es
           </p>
         </div>
       `,
