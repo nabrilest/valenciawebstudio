@@ -1,220 +1,152 @@
 
-# Plan: Reestructuración Completa de Valencia Web Studio
 
-## Resumen del Proyecto
+# Plan: Corregir visibilidad FAQ, quitar "reales" y añadir demo de tatuajes
 
-Transformar la web actual de Valencia Web Studio para convertirla en una herramienta de captación de clientes enfocada en negocios locales de Valencia. El nuevo enfoque incluye servicios de **SEO local** además de diseño web, con nuevos precios (799€, 1.499€, 2.799€) y un sistema de auditorías gratuitas.
+## Problema 1: FAQ no visible
 
----
+La página `/faq` existe y funciona, pero no aparece en la navegación principal (Header). Solo está en el Footer.
 
-## Estructura de Páginas
+### Solución
+Añadir el link de FAQ al Header para que sea más accesible.
 
-### Páginas a Modificar
-| Página | Estado | Cambios principales |
-|--------|--------|---------------------|
-| Home | Rediseño completo | Nueva propuesta de valor, planes, proceso, casos |
-| Servicios | Rediseño completo | Diseño web + SEO + Mantenimiento + Fotografía |
-| Proyectos | Ampliar | Mínimo 6 proyectos con métricas |
-| Contacto | Rediseño | Formulario de auditoría + click-to-call |
-| Sobre Nosotros | Mantener/Ajustar | Pequeños ajustes de tono |
+**Archivo a modificar:** `src/components/Header.tsx`
 
-### Páginas Nuevas
-| Página | Ruta | Contenido |
-|--------|------|-----------|
-| Precios | `/precios` | Planes detallados con garantías |
-| Proceso y Resultados | `/proceso` | Timeline de resultados medibles |
-| FAQ | `/faq` | Preguntas frecuentes |
-
----
-
-## Cambios Detallados por Archivo
-
-### 1. `src/App.tsx`
-- Añadir rutas: `/precios`, `/proceso`, `/faq`
-- Importar nuevas páginas
-
-### 2. `src/pages/Home.tsx` - Rediseño Completo
-
-**Hero Section:**
-- H1: "Webs y SEO local para negocios de Valencia"
-- Subtítulo: "Más llamadas y más clientes desde Google"
-- Texto sobre auditoría gratuita
-- Botones: [Solicitar auditoría gratuita] [Ver precios]
-- Badge de confianza: "Garantía técnica 90 días · Pago en 3 plazos · Trato cercano"
-
-**Sección "¿Qué hacemos?":**
-- Explicación sencilla
-- 3 bullets con iconos
-
-**Sección "¿Por qué funciona?":**
-- 3 bullets con beneficios medibles
-
-**Sección "Precios claros":**
-- 3 tarjetas: Básico (799€), Avanzado (1.499€), Premium (2.799€)
-- Cada una con lista de características
-- Botón [Quiero este plan]
-
-**Sección "Cómo trabajamos":**
-- 5 pasos numerados con iconos
-
-**Sección "Casos reales":**
-- 2-3 proyectos destacados con imagen y resultado
-
-**CTA Final:**
-- "¿Hablamos 10 minutos y lo vemos?"
-- Botón [Solicitar auditoría gratuita]
-
-### 3. `src/pages/Servicios.tsx` - Rediseño Completo
-
-**Servicios ofrecidos:**
-1. **Diseño web** - Webs profesionales pensadas para convertir
-2. **SEO local** - Presencia en Google para búsquedas locales
-3. **Mantenimiento** - Desde 49€/mes
-4. **Fotografía y contenidos** - Fotos y textos profesionales
-
-Cada servicio con icono, descripción clara y botón de contacto.
-
-### 4. `src/pages/Precios.tsx` - Nueva Página
-
-**Contenido:**
-- Título: "Precios claros, sin sorpresas"
-- Los 3 planes con detalles ampliados
-- Información de pago: "40% al empezar, 30% a mitad, 30% al final"
-- CTA: [Contactar para empezar]
-
-### 5. `src/pages/Proyectos.tsx` - Ampliar
-
-**Cambios:**
-- Mínimo 6 proyectos (actualmente hay 2 + placeholder)
-- Cada proyecto con: imagen, descripción, métricas de mejora (visitas, llamadas, reservas)
-- Layout de grid mejorado
-
-### 6. `src/pages/Proceso.tsx` - Nueva Página
-
-**Contenido:**
-- Título: "Cómo medimos si funciona"
-- Timeline de 30/60/90 días con métricas
-- Explicación de qué esperar en cada fase
-
-### 7. `src/pages/FAQ.tsx` - Nueva Página
-
-**Preguntas incluidas:**
-1. ¿Cuánto cuesta una web?
-2. ¿Cuánto tarda?
-3. ¿Me aseguras salir primero en Google?
-4. ¿Incluye SEO local?
-5. ¿Puedo editar la web?
-6. ¿Hay permanencia?
-
-Usaremos el componente Accordion existente.
-
-### 8. `src/pages/Contacto.tsx` - Rediseño
-
-**Formulario de auditoría:**
-- Campos: Nombre, Negocio, Teléfono, Email, Barrio/Ciudad, Mensaje
-- Checkbox de privacidad
-- Botón: [Solicitar auditoría]
-
-**Click-to-call móvil:**
-- Botón fijo en la parte inferior de la pantalla (solo móvil)
-
-### 9. `src/components/Header.tsx` - Actualizar Navegación
-
-**Links actualizados:**
-- Home, Servicios, Precios, Proyectos, Contacto
-- (FAQ y Proceso accesibles desde otras páginas)
-
-### 10. `src/components/Footer.tsx` - Actualizar
-
-**Añadir:**
-- Texto de garantía: "Garantía técnica 90 días"
-- Links a nuevas páginas (Precios, Proceso, FAQ)
-
-### 11. `supabase/functions/send-contact-email/index.ts`
-
-**Actualizar para nuevos campos:**
-- Añadir campos: negocio, teléfono, barrio
-- Actualizar template del email
-
----
-
-## Componentes Reutilizables a Crear
-
-### `src/components/PricingCard.tsx`
-Tarjeta de precios reutilizable en Home y Precios.
-
-### `src/components/MobileCallButton.tsx`
-Botón fijo de llamada para móvil.
-
-### `src/components/ProcessStep.tsx`
-Paso del proceso de trabajo (reutilizable).
-
----
-
-## Archivos Nuevos a Crear
-
-```text
-src/pages/Precios.tsx
-src/pages/Proceso.tsx
-src/pages/FAQ.tsx
-src/components/PricingCard.tsx
-src/components/MobileCallButton.tsx
+```tsx
+const navLinks = [
+  { to: "/", label: "Home" },
+  { to: "/servicios", label: "Servicios" },
+  { to: "/precios", label: "Precios" },
+  { to: "/proyectos", label: "Proyectos" },
+  { to: "/faq", label: "FAQ" },  // Añadir
+  { to: "/contacto", label: "Contacto" },
+];
 ```
 
 ---
 
-## Integraciones Mencionadas
+## Problema 2: Quitar "reales" de "Casos reales"
 
-| Integración | Estado | Nota |
-|-------------|--------|------|
-| Formulario de contacto | Ya existe | Ampliar campos |
-| Click-to-call | Nuevo | Componente móvil |
-| Google Analytics | Externa | El usuario lo configura en su Google Account |
-| Search Console | Externa | El usuario lo configura |
-| Calendario de reservas | Evaluar | Podría añadirse con Calendly embed |
+En la sección de casos de la Home aparece "Casos reales".
+
+### Solución
+Cambiar el título a simplemente "Casos" o "Ejemplos de proyectos".
+
+**Archivo a modificar:** `src/pages/Home.tsx` (líneas 351-352)
+
+Cambiar:
+```tsx
+<h2>Casos reales</h2>
+```
+Por:
+```tsx
+<h2>Ejemplos de proyectos</h2>
+```
 
 ---
 
-## Orden de Implementación
+## Problema 3: Añadir demo de tatuajes
 
-1. **Fase 1 - Estructura base**
-   - Crear páginas nuevas (Precios, Proceso, FAQ)
-   - Actualizar rutas en App.tsx
-   - Actualizar Header y Footer
+Crear una nueva demo completa para un estudio de tatuajes siguiendo la misma estructura que la peluquería.
 
-2. **Fase 2 - Contenido principal**
-   - Rediseñar Home.tsx completo
-   - Rediseñar Servicios.tsx
-   - Rediseñar Contacto.tsx con nuevos campos
+### Archivos a crear
 
-3. **Fase 3 - Detalles**
-   - Ampliar Proyectos.tsx
-   - Crear componente MobileCallButton
-   - Actualizar edge function de email
+**1. `src/pages/DemoTatuajes.tsx`**
 
-4. **Fase 4 - Ajustes finales**
-   - Revisar textos y tono
-   - Verificar responsive
-   - Probar formularios
+Estructura similar a DemoPeluqueria.tsx con:
+- Banner de demo con link a proyectos
+- Header con navegación lateral móvil
+- Hero con imagen de fondo
+- Sección "Sobre nosotros" 
+- Sección de estilos/servicios (tradicional, realismo, blackwork, etc.)
+- Galería de trabajos con lightbox
+- Testimonios de clientes
+- Sección de contacto con WhatsApp
+- Footer propio
+
+Paleta de colores propuesta para tatuajes:
+- Negro/carbón: `#1A1A1A` (principal)
+- Dorado: `#C9A227` (acento)
+- Gris: `#2D2D2D` (secundario)
+- Crema claro: `#F5F5F0` (fondo)
+
+Servicios/estilos a incluir:
+- Tradicional/Old School
+- Realismo
+- Blackwork
+- Fine line/Minimalista
+- Lettering
+- Cover-ups
+- Diseño personalizado
+
+**2. Añadir ruta en `src/App.tsx`**
+```tsx
+import DemoTatuajes from "./pages/DemoTatuajes";
+// ...
+<Route path="/demo/tatuajes" element={<DemoTatuajes />} />
+```
+
+**3. Añadir proyecto en `src/pages/Proyectos.tsx`**
+
+Nuevo proyecto en el array `projects`:
+```tsx
+{
+  title: "Estudio de Tatuajes",
+  description: "Web con estilo industrial para un estudio de tatuajes. Galería de trabajos, estilos y reserva de citas.",
+  image: projectTatuajes, // Usaremos una imagen existente temporalmente
+  demoUrl: "/demo/tatuajes",
+  metrics: [
+    { icon: Phone, text: "+35% solicitudes de cita" },
+    { icon: TrendingUp, text: "Top 5 en Google Maps" },
+  ],
+  services: ["Diseño web", "SEO local", "Galería interactiva"],
+}
+```
+
+**4. Añadir caso en Home.tsx**
+
+En el array `caseStudies`:
+```tsx
+{
+  title: "Estudio de Tatuajes",
+  result: "Más solicitudes de cita online",
+  description: "Web con galería de trabajos y reserva directa. Estilo industrial y moderno.",
+  image: projectTatuajes,
+  link: "/demo/tatuajes",
+}
+```
+
+---
+
+## Resumen de cambios
+
+| Archivo | Acción | Descripción |
+|---------|--------|-------------|
+| `src/components/Header.tsx` | Modificar | Añadir link a FAQ |
+| `src/pages/Home.tsx` | Modificar | Quitar "reales", añadir caso tatuajes |
+| `src/pages/Proyectos.tsx` | Modificar | Añadir proyecto tatuajes |
+| `src/pages/DemoTatuajes.tsx` | Crear | Demo completa del estudio |
+| `src/App.tsx` | Modificar | Añadir ruta `/demo/tatuajes` |
 
 ---
 
 ## Sección Técnica
 
+### Estructura de DemoTatuajes.tsx
+
+El componente seguirá la misma estructura que DemoPeluqueria.tsx:
+1. AnimatedSection wrapper para animaciones de scroll
+2. useState para lightbox de galería y menú móvil
+3. Arrays de datos para servicios, galería, testimonios
+4. Secciones: Hero, Nosotros, Estilos, Galería, Opiniones, Contacto
+5. Sheet de Radix para menú móvil
+6. Dialog de Radix para lightbox de imágenes
+
+### Imágenes
+Se reutilizarán las imágenes de galería existentes (gallery-1.jpg a gallery-8.jpg) temporalmente. Para la imagen del proyecto se puede usar project-peluqueria.jpg como placeholder hasta tener imágenes específicas de tatuajes.
+
 ### Dependencias
-No se requieren nuevas dependencias. Se usarán:
-- `@radix-ui/react-accordion` (existente) para FAQ
-- Componentes UI existentes (Button, Card, Input, etc.)
-
-### Base de Datos
-No se requieren cambios en la base de datos para esta fase.
-
-### Edge Function
-Se modificará `send-contact-email` para incluir los campos adicionales del formulario de auditoría (negocio, teléfono, barrio).
-
-### SEO
-Cada página nueva tendrá:
-- Title y description optimizados
-- Open Graph tags
-- Canonical URL
+No se requieren nuevas dependencias. Se usarán los componentes existentes:
+- Sheet, Dialog de Radix
+- Button de shadcn/ui
+- Iconos de Lucide
 
