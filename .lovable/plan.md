@@ -1,119 +1,62 @@
+# Plan: Imágenes de tatuajes reales y arreglar enlace de Instagram en la demo
 
+## Problema
 
-# Plan: Corregir visibilidad FAQ, quitar "reales" y añadir demo de tatuajes
+En la página `/demo/tatuajes` (`src/pages/DemoTatuajes.tsx`):
 
-## Problema 1: FAQ no visible
+1. **Imágenes de muestra son de peluquería**: La galería y el hero usan las imágenes compartidas `gallery-1.jpg`–`gallery-8.jpg` y `lumina-hero.jpg`, que en realidad son fotos de una peluquería/salón de belleza. El usuario quiere que sean fotos de tatuajes.
 
-La página `/faq` existe y funciona, pero no aparece en la navegación principal (Header). Solo está en el Footer.
-
-### Solución
-Añadir el link de FAQ al Header para que sea más accesible.
-
-**Archivo a modificar:** `src/components/Header.tsx`
-
-```tsx
-const navLinks = [
-  { to: "/", label: "Home" },
-  { to: "/servicios", label: "Servicios" },
-  { to: "/precios", label: "Precios" },
-  { to: "/proyectos", label: "Proyectos" },
-  { to: "/faq", label: "FAQ" },  // Añadir
-  { to: "/contacto", label: "Contacto" },
-];
-```
+2. **El enlace de Instagram redirige a una cuenta existente**: Los 4 enlaces `https://instagram.com/inkstudio` apuntan a una cuenta real de Instagram. Hay que cambiarlos por un usuario claramente ficticio para una demo.
 
 ---
 
-## Problema 2: Quitar "reales" de "Casos reales"
+## Solución
 
-En la sección de casos de la Home aparece "Casos reales".
+### 1. Generar imágenes nuevas de tatuajes (no reutilizar las de peluquería)
 
-### Solución
-Cambiar el título a simplemente "Casos" o "Ejemplos de proyectos".
+Las imágenes `gallery-*.jpg` y `lumina-hero.jpg` se comparten con `DemoPeluqueria.tsx`, así que **no** se sobrescriben. Se generan archivos nuevos exclusivos para la demo de tatuajes:
 
-**Archivo a modificar:** `src/pages/Home.tsx` (líneas 351-352)
+| Archivo nuevo | Contenido |
+|---------------|-----------|
+| `src/assets/tattoo-hero.jpg` | Interior de estudio de tatuajes, atmósfera oscura/industrial, tatuador trabajando |
+| `src/assets/tattoo-gallery-1.jpg` | Tatuaje realista (retrato) en brazo |
+| `src/assets/tattoo-gallery-2.jpg` | Blackwork geométrico en negro |
+| `src/assets/tattoo-gallery-3.jpg` | Fine line floral, líneas finas |
+| `src/assets/tattoo-gallery-4.jpg` | Tradicional / Old School con color |
+| `src/assets/tattoo-gallery-5.jpg` | Lettering / tipografía caligráfica |
+| `src/assets/tattoo-gallery-6.jpg` | Retrato realista en detalle |
+| `src/assets/tattoo-gallery-7.jpg` | Diseño minimalista pequeño |
+| `src/assets/tattoo-gallery-8.jpg` | Interior del estudio (sala de trabajo) |
 
-Cambiar:
+Estilo visual coherente: fotografía realista, buena luz, fondo neutro/oscuro. Se generarán con `imagegen--generate_image`.
+
+### 2. Actualizar los imports en `DemoTatuajes.tsx`
+
+Cambiar las líneas 9–17 para importar las imágenes nuevas de tatuaje en lugar de las compartidas:
+
 ```tsx
-<h2>Casos reales</h2>
-```
-Por:
-```tsx
-<h2>Ejemplos de proyectos</h2>
-```
-
----
-
-## Problema 3: Añadir demo de tatuajes
-
-Crear una nueva demo completa para un estudio de tatuajes siguiendo la misma estructura que la peluquería.
-
-### Archivos a crear
-
-**1. `src/pages/DemoTatuajes.tsx`**
-
-Estructura similar a DemoPeluqueria.tsx con:
-- Banner de demo con link a proyectos
-- Header con navegación lateral móvil
-- Hero con imagen de fondo
-- Sección "Sobre nosotros" 
-- Sección de estilos/servicios (tradicional, realismo, blackwork, etc.)
-- Galería de trabajos con lightbox
-- Testimonios de clientes
-- Sección de contacto con WhatsApp
-- Footer propio
-
-Paleta de colores propuesta para tatuajes:
-- Negro/carbón: `#1A1A1A` (principal)
-- Dorado: `#C9A227` (acento)
-- Gris: `#2D2D2D` (secundario)
-- Crema claro: `#F5F5F0` (fondo)
-
-Servicios/estilos a incluir:
-- Tradicional/Old School
-- Realismo
-- Blackwork
-- Fine line/Minimalista
-- Lettering
-- Cover-ups
-- Diseño personalizado
-
-**2. Añadir ruta en `src/App.tsx`**
-```tsx
-import DemoTatuajes from "./pages/DemoTatuajes";
-// ...
-<Route path="/demo/tatuajes" element={<DemoTatuajes />} />
+import heroImage from "@/assets/tattoo-hero.jpg";
+import gallery1 from "@/assets/tattoo-gallery-1.jpg";
+// ... hasta gallery8
 ```
 
-**3. Añadir proyecto en `src/pages/Proyectos.tsx`**
+El resto del componente (la estructura, el array `gallery`, los alts) se mantiene igual, solo cambian los `src`.
 
-Nuevo proyecto en el array `projects`:
-```tsx
-{
-  title: "Estudio de Tatuajes",
-  description: "Web con estilo industrial para un estudio de tatuajes. Galería de trabajos, estilos y reserva de citas.",
-  image: projectTatuajes, // Usaremos una imagen existente temporalmente
-  demoUrl: "/demo/tatuajes",
-  metrics: [
-    { icon: Phone, text: "+35% solicitudes de cita" },
-    { icon: TrendingUp, text: "Top 5 en Google Maps" },
-  ],
-  services: ["Diseño web", "SEO local", "Galería interactiva"],
-}
+### 3. Cambiar el enlace de Instagram
+
+Reemplazar los 4 enlaces `https://instagram.com/inkstudio` por un usuario claramente ficticio de demo, por ejemplo:
+
+```
+https://instagram.com/inkstudio.valencia.demo
 ```
 
-**4. Añadir caso en Home.tsx**
+Ubicaciones a cambiar (todas en `DemoTatuajes.tsx`):
+- Línea ~186 (icono del menú lateral)
+- Línea ~399 (enlace "Ver más en @inkstudio" bajo la galería)
+- Línea ~568 (sección "Redes")
+- Línea ~592 (icono del footer)
 
-En el array `caseStudies`:
-```tsx
-{
-  title: "Estudio de Tatuajes",
-  result: "Más solicitudes de cita online",
-  description: "Web con galería de trabajos y reserva directa. Estilo industrial y moderno.",
-  image: projectTatuajes,
-  link: "/demo/tatuajes",
-}
-```
+El texto visible `@inkstudio` se mantiene (es el nombre de la demo); solo cambia el destino del enlace para que no lleve a una cuenta real.
 
 ---
 
@@ -121,32 +64,16 @@ En el array `caseStudies`:
 
 | Archivo | Acción | Descripción |
 |---------|--------|-------------|
-| `src/components/Header.tsx` | Modificar | Añadir link a FAQ |
-| `src/pages/Home.tsx` | Modificar | Quitar "reales", añadir caso tatuajes |
-| `src/pages/Proyectos.tsx` | Modificar | Añadir proyecto tatuajes |
-| `src/pages/DemoTatuajes.tsx` | Crear | Demo completa del estudio |
-| `src/App.tsx` | Modificar | Añadir ruta `/demo/tatuajes` |
+| `src/assets/tattoo-hero.jpg` + 8 `tattoo-gallery-*.jpg` | Crear | 9 imágenes nuevas de tatuajes generadas con IA |
+| `src/pages/DemoTatuajes.tsx` | Modificar | Cambiar imports de imágenes a las nuevas; cambiar 4 enlaces de Instagram a usuario ficticio |
+
+No se modifican `DemoPeluqueria.tsx` ni las imágenes compartidas, para no afectar a la otra demo.
 
 ---
 
 ## Sección Técnica
 
-### Estructura de DemoTatuajes.tsx
-
-El componente seguirá la misma estructura que DemoPeluqueria.tsx:
-1. AnimatedSection wrapper para animaciones de scroll
-2. useState para lightbox de galería y menú móvil
-3. Arrays de datos para servicios, galería, testimonios
-4. Secciones: Hero, Nosotros, Estilos, Galería, Opiniones, Contacto
-5. Sheet de Radix para menú móvil
-6. Dialog de Radix para lightbox de imágenes
-
-### Imágenes
-Se reutilizarán las imágenes de galería existentes (gallery-1.jpg a gallery-8.jpg) temporalmente. Para la imagen del proyecto se puede usar project-peluqueria.jpg como placeholder hasta tener imágenes específicas de tatuajes.
-
-### Dependencias
-No se requieren nuevas dependencias. Se usarán los componentes existentes:
-- Sheet, Dialog de Radix
-- Button de shadcn/ui
-- Iconos de Lucide
-
+- Las imágenes se generan con `imagegen--generate_image` (modelo `standard` para mejor calidad fotográfica).
+- Se guardan en `src/assets/` como `.jpg` (fotografías, no se necesita transparencia).
+- Los imports actuales de `gallery-6` ya funcionan (el archivo existe), por lo que el cambio es 1:1.
+- No se requieren nuevas dependencias ni cambios en rutas.
