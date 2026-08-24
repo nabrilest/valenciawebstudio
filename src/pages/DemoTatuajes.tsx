@@ -183,7 +183,7 @@ const DemoTatuajes = () => {
                   </a>
                   <div className="flex items-center justify-center gap-4 mt-4">
                     <a 
-                      href="https://instagram.com/inkstudio" 
+                      href="https://instagram.com/inkstudio.valencia.demo" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="w-10 h-10 rounded-full flex items-center justify-center"
@@ -396,7 +396,7 @@ const DemoTatuajes = () => {
           </div>
           <div className="text-center mt-8">
             <a 
-              href="https://instagram.com/inkstudio" 
+              href="https://instagram.com/inkstudio.valencia.demo" 
               target="_blank" 
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 font-body hover:underline"
@@ -565,7 +565,7 @@ const DemoTatuajes = () => {
         <div className="container text-center">
           <p className="font-body mb-4" style={{ color: colors.primary, opacity: 0.7 }}>Síguenos en redes</p>
           <a 
-            href="https://instagram.com/inkstudio" 
+            href="https://instagram.com/inkstudio.valencia.demo" 
             target="_blank" 
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-xl px-6 py-3 font-body hover:shadow-md transition-shadow"
@@ -589,7 +589,7 @@ const DemoTatuajes = () => {
           </p>
           <div className="flex items-center justify-center gap-4 mb-6">
             <a 
-              href="https://instagram.com/inkstudio" 
+              href="https://instagram.com/inkstudio.valencia.demo" 
               target="_blank" 
               rel="noopener noreferrer"
               className="w-10 h-10 rounded-full flex items-center justify-center transition-colors"
