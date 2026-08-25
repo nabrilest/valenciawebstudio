@@ -1,64 +1,64 @@
 # 🚀 Valencia Web Studio
 
-Plataforma web corporativa y muestrario interactivo para **Valencia Web Studio**, un estudio de diseño y desarrollo web enfocado en la digitalización de comercios locales, pequeños negocios y profesionales de Valencia.
+Corporate web platform and interactive showcase for **Valencia Web Studio**, a web design and development studio focused on digitizing local shops, small businesses, and professionals in Valencia, Spain.
 
-El proyecto funciona como punto de captación de clientes y exposición de prototipos interactivos adaptados a las necesidades del comercio de proximidad.
-
----
-
-## 🌐 Enlaces de Interés
-
-* **Página Web en Vivo:** [valenciawebstudio.lovable.app](https://valenciawebstudio.lovable.app)
-* **Vista Previa en Lovable:** [Ver Preview](https://lovable.dev/preview/0sPudrb0R33vuzbL7mD3byghVboIT8MZ)
+The project serves as a client acquisition portal and a showcase for interactive prototypes tailored to the needs of local businesses.
 
 ---
 
-## 🌟 Características del Proyecto
+## 🌐 Live Links
 
-* **Estructura Orientada a Negocios Locales:** Mensaje claro, cercano y profesional diseñado para transmitir confianza a pequeñas empresas de Valencia.
-* **Muestrario de Demos Multiformato:** Integración de prototipos con dos patrones de navegación diferenciados:
-  * **Modelo One-Page:** Navegación por desplazamiento suave (*scroll*) directo hacia las secciones de contacto e información.
-  * **Modelo Multipágina:** Navegación clásica estructurada en rutas independientes (*Home, Servicios, Proyectos, Sobre Nosotros, Contacto*).
-* **Herramientas de Conversión:**
-  * Chat directo mediante WhatsApp.
-  * Formularios de contacto para solicitud de presupuestos.
-  * Tablas de tarifas y servicios transparentes.
-* **Diseño e Infraestructura:**
-  * Interfaz 100% adaptable a dispositivos móviles (*Responsive Design*).
-  * Arquitectura preparada para optimización SEO local.
+* **Live Website:** [valenciawebstudio.lovable.app](https://valenciawebstudio.lovable.app)
+* **Lovable Preview:** [View Preview](https://lovable.dev/preview/0sPudrb0R33vuzbL7mD3byghVboIT8MZ)
 
 ---
 
-## 🛠️ Tecnologías Utilizadas
+## 🌟 Key Features
 
-* **Entorno de Desarrollo:** [Lovable](https://lovable.dev)
+* **Local Business Focus:** Clear, approachable, and professional messaging designed to build trust with local small businesses.
+* **Multi-Format Showcase:** Interactive prototypes featuring two distinct navigation patterns:
+  * **One-Page Model:** Smooth scroll navigation leading directly to contact and info sections.
+  * **Multi-Page Model:** Classic structured navigation across independent routes (*Home, Services, Projects, About Us, Contact*).
+* **Conversion Tools:**
+  * Direct WhatsApp chat integration.
+  * Contact forms for quote requests.
+  * Transparent pricing and service tables.
+* **Design & Infrastructure:**
+  * 100% Mobile-Responsive Design.
+  * Architecture prepared for local SEO optimization.
+
+---
+
+## 🛠️ Tech Stack
+
+* **Development Environment:** [Lovable](https://lovable.dev)
 * **Frontend:** React, TypeScript, Tailwind CSS
-* **Librerías de UI:** Lucide Icons, Shadcn UI
+* **UI Libraries:** Lucide Icons, Shadcn UI
 
 ---
 
-## 👥 Autores y Créditos
+## 👥 Authors & Credits
 
-Proyecto diseñado y desarrollado conjuntamente por:
+Designed and developed jointly by:
 
-* **Natalia** — [GitHub](https://github.com/nabrilest) | [LinkedIn](https://www.linkedin.com/in/natalia-abril-esteve-2729403a9)
+* **Natalia Abril** — [GitHub](https://github.com/nabrilest) | [LinkedIn](https://www.linkedin.com/in/natalia-abril-esteve-2729403a9)
 * **Abel Javier García** — [LinkedIn](https://www.linkedin.com/in/abel-jgm)
 
 ---
 
-## 💻 Desarrollo Local
+## 💻 Local Development
 
-Para ejecutar el proyecto en local:
+To run the project locally:
 
 ```sh
-# Clonar el repositorio
+# Clone the repository
 git clone [https://github.com/nabrilest/valenciawebstudio.git](https://github.com/nabrilest/valenciawebstudio.git)
 
-# Entrar en la carpeta
+# Navigate into the project folder
 cd valenciawebstudio
 
-# Instalar dependencias
+# Install dependencies
 npm install
 
-# Iniciar servidor de desarrollo
+# Start the development server
 npm run dev
