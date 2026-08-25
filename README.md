@@ -42,7 +42,7 @@ El proyecto funciona como punto de captación de clientes y exposición de proto
 Proyecto diseñado y desarrollado conjuntamente por:
 
 * **Natalia** — [GitHub](https://github.com/nabrilest) | [LinkedIn](https://www.linkedin.com/in/natalia-abril-esteve-2729403a9)
-* **Abel García** — [LinkedIn](https://www.linkedin.com/in/abel-jgm)
+* **Abel Javier García** — [LinkedIn](https://www.linkedin.com/in/abel-jgm)
 
 ---
 
